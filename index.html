@@ -3,266 +3,177 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CreatorOne — All-in-one creator platform (MVP demo)</title>
+<title>CreatorOne — Every creator tool. One simple price.</title>
+<meta name="description" content="CreatorOne bundles link-in-bio, bookings, courses, analytics, email, community and more into one page for creators, at one simple price.">
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#f6f6f8;color:#111827;line-height:1.5}
-  .top{position:sticky;top:0;background:#fff;border-bottom:1px solid #e5e7eb;z-index:10}
-  .top-in{max-width:860px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-  .logo{font-weight:800;font-size:20px;letter-spacing:-.5px}.logo span{color:#6d28d9}
-  .nav{display:flex;gap:8px}
-  .nav button{border:1px solid #e5e7eb;background:#fff;padding:8px 14px;border-radius:999px;cursor:pointer;font-weight:600}
-  .nav button.on{background:#111827;color:#fff;border-color:#111827}
-  .wrap{max-width:860px;margin:0 auto;padding:20px 16px 60px}
-  .note{background:#fef9c3;border:1px solid #fde68a;padding:10px 14px;border-radius:12px;font-size:14px;margin-bottom:18px}
-  .card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:18px;margin-bottom:16px}
-  .profile{display:flex;gap:16px;align-items:center}
-  .avatar{width:72px;height:72px;border-radius:50%;background:#6d28d9;color:#fff;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:800;flex-shrink:0}
-  .profile h1{font-size:22px}.profile p{color:#6b7280;font-size:14px}
-  h2{font-size:18px;margin-bottom:12px} h3{font-size:15px}
-  .linkrow,.prodrow,.courserow,.bookrow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;border:1px solid #e5e7eb;border-radius:12px;margin-bottom:10px}
-  .linkrow a{color:#111827;font-weight:600;text-decoration:none}
-  .muted{color:#6b7280;font-size:13px}
-  .btn{background:#6d28d9;color:#fff;border:0;padding:10px 16px;border-radius:999px;cursor:pointer;font-weight:700}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#fff;color:#111827;line-height:1.6}
+  a{color:#6d28d9;text-decoration:none}
+  .top{position:sticky;top:0;background:rgba(255,255,255,.95);border-bottom:1px solid #e5e7eb;z-index:10}
+  .top-in{max-width:960px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .logo{font-weight:800;font-size:22px;letter-spacing:-.5px}.logo span{color:#6d28d9}
+  .top nav{display:flex;gap:20px;align-items:center}
+  .top nav a{color:#374151;font-weight:600;font-size:15px}
+  @media(max-width:640px){.top nav a{display:none}.top nav a.btn{display:inline-block}}
+  .btn{display:inline-block;background:#6d28d9;color:#fff;padding:12px 22px;border-radius:999px;font-weight:700;border:0;cursor:pointer}
   .btn.ghost{background:#fff;color:#111827;border:1px solid #e5e7eb}
-  .btn.small{padding:7px 12px;font-size:13px}
-  input,select,textarea{width:100%;padding:10px 12px;border:1px solid #e5e7eb;border-radius:10px;margin-bottom:10px;font-size:15px}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  @media(max-width:600px){.grid{grid-template-columns:1fr}}
-  .stat{border:1px solid #e5e7eb;border-radius:12px;padding:14px}
-  .stat b{font-size:22px;display:block}
-  .stat span{color:#6b7280;font-size:13px}
-  .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:13px}
-  .bar-row .lbl{width:40px;color:#6b7280}
-  .bar{height:12px;background:#ede9fe;border-radius:99px;flex:1;overflow:hidden}
-  .bar i{display:block;height:100%;background:#6d28d9}
-  .slot{display:inline-block;border:1px solid #e5e7eb;border-radius:999px;padding:8px 14px;margin:0 8px 8px 0;cursor:pointer;font-weight:600;background:#fff}
-  .slot.booked{background:#dcfce7;border-color:#86efac;color:#166534;cursor:default}
-  .post{border-top:1px solid #f3f4f6;padding:12px 0}.post:first-child{border-top:0}
-  .price{display:flex;gap:12px;flex-wrap:wrap}
-  .price .card{flex:1;min-width:240px;margin-bottom:0}
-  .price .hot{border:2px solid #6d28d9}
-  .strike{text-decoration:line-through;color:#9ca3af}
-  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#111827;color:#fff;padding:12px 20px;border-radius:999px;font-weight:600;display:none;z-index:50}
-  .hide{display:none}
-  footer{color:#6b7280;font-size:13px;text-align:center;padding:10px}
+  .btn.light{background:#fff;color:#6d28d9}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+  .hero{text-align:center;padding:72px 0 56px}
+  .hero h1{font-size:52px;line-height:1.1;letter-spacing:-1.5px;max-width:720px;margin:0 auto 18px}
+  @media(max-width:640px){.hero h1{font-size:36px}}
+  .hero h1 span{color:#6d28d9}
+  .hero p{font-size:19px;color:#4b5563;max-width:620px;margin:0 auto 28px}
+  .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .strip{text-align:center;color:#6b7280;font-weight:600;padding-bottom:56px}
+  section{padding:56px 0}
+  h2{font-size:32px;letter-spacing:-.5px;text-align:center;margin-bottom:12px}
+  .sub{text-align:center;color:#4b5563;max-width:640px;margin:0 auto 36px;font-size:17px}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  @media(max-width:860px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.grid{grid-template-columns:1fr}}
+  .feat{border:1px solid #e5e7eb;border-radius:16px;padding:20px}
+  .feat .ic{font-size:26px;margin-bottom:8px}
+  .feat h3{font-size:16px;margin-bottom:6px}
+  .feat p{font-size:14px;color:#4b5563}
+  .feat .sep{font-size:13px;color:#9ca3af;margin-top:8px}
+  table{width:100%;border-collapse:collapse;font-size:15px}
+  th,td{padding:12px 14px;border-bottom:1px solid #e5e7eb;text-align:left}
+  th{color:#6b7280;font-size:13px;text-transform:uppercase;letter-spacing:.5px}
+  td:last-child,th:last-child{text-align:right}
+  .good{color:#15803d;font-weight:700}
+  .compare{border:1px solid #e5e7eb;border-radius:16px;overflow:hidden}
+  .price-wrap{display:flex;justify-content:center}
+  .price-card{border:2px solid #6d28d9;border-radius:20px;padding:32px;max-width:480px;width:100%;text-align:center}
+  .price-card .amt{font-size:52px;font-weight:800;letter-spacing:-1px}
+  .price-card .amt small{font-size:18px;color:#6b7280;font-weight:600}
+  .price-card ul{list-style:none;text-align:left;margin:22px 0}
+  .price-card li{padding:8px 0;border-bottom:1px solid #f3f4f6;font-size:15px}
+  .price-card li:before{content:"✓ ";color:#15803d;font-weight:800}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:640px){.steps{grid-template-columns:1fr}}
+  .step{border:1px solid #e5e7eb;border-radius:16px;padding:22px}
+  .step b{font-size:28px;color:#6d28d9}
+  .faq{max-width:720px;margin:0 auto}
+  .faq details{border:1px solid #e5e7eb;border-radius:12px;padding:16px 18px;margin-bottom:12px}
+  .faq summary{font-weight:700;cursor:pointer}
+  .faq p{color:#4b5563;margin-top:8px;font-size:15px}
+  .banner{background:#111827;color:#fff;border-radius:20px;padding:44px 32px;text-align:center}
+  .banner h2{color:#fff}
+  .banner p{color:#d1d5db;margin:0 auto 24px;max-width:520px}
+  footer{border-top:1px solid #e5e7eb;padding:28px 0 40px;color:#6b7280;font-size:13px;text-align:center}
 </style>
 </head>
 <body>
 <div class="top"><div class="top-in">
   <div class="logo">Creator<span>One</span></div>
-  <div class="nav">
-    <button id="btn-store" class="on" onclick="showView('store')">My Store</button>
-    <button id="btn-dash" onclick="showView('dash')">Dashboard</button>
-  </div>
+  <nav>
+    <a href="#features">Features</a>
+    <a href="#compare">Compare</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+    <a class="btn" style="padding:9px 18px" href="app.html">Try live demo</a>
+  </nav>
 </div></div>
 
 <div class="wrap">
-  <div class="note">MVP demo — ye chalti hui demo hai, asli product nahi. Payment, asli Instagram auto-DM aur login abhi isme nahi hain; saara data sirf isi browser me save hota hai.</div>
-
-  <!-- ============ STOREFRONT VIEW ============ -->
-  <div id="view-store">
-    <div class="card profile">
-      <div class="avatar">A</div>
-      <div>
-        <h1>@demo.creator</h1>
-        <p>Digital creator — courses, bookings, newsletter aur community, sab ek hi page par.</p>
-        <p class="muted" id="store-stats"></p>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>Links</h2>
-      <div id="links"></div>
-      <div class="grid">
-        <input id="new-link-title" placeholder="Link ka naam, jaise: My YouTube">
-        <input id="new-link-url" placeholder="URL, jaise: https://youtube.com/...">
-      </div>
-      <button class="btn small" onclick="addLink()">+ Link jodo</button>
-    </div>
-
-    <div class="card">
-      <h2>Store — Digital products</h2>
-      <div id="products"></div>
-    </div>
-
-    <div class="card">
-      <h2>Book a call</h2>
-      <p class="muted" style="margin-bottom:10px">30 min intro call — slot chuno, booking turant save hogi.</p>
-      <div id="slots"></div>
-      <div id="bookings-mine"></div>
-    </div>
-
-    <div class="card">
-      <h2>Courses</h2>
-      <div id="courses"></div>
-    </div>
-
-    <div class="card">
-      <h2>Newsletter</h2>
-      <p class="muted" style="margin-bottom:10px">Har hafte ek email — naye courses, offers aur posts.</p>
-      <div class="grid">
-        <input id="sub-email" type="email" placeholder="Apna email likho">
-        <button class="btn" onclick="subscribe()">Subscribe</button>
-      </div>
-      <p class="muted" id="sub-count"></p>
-    </div>
-
-    <div class="card">
-      <h2>Community</h2>
-      <div id="posts"></div>
-      <textarea id="new-post" rows="2" placeholder="Community me kuch likho..."></textarea>
-      <button class="btn small" onclick="addPost()">Post karo</button>
-    </div>
-
-    <div class="price">
-      <div class="card">
-        <h3>Alag-alag tools</h3>
-        <p class="strike">$443 / mahina</p>
-        <p class="muted">Link-in-bio, bookings, courses, analytics, auto-DM, email, library, community — sab alag subscription par. (Ye figures us reel ke dawe hain, verify nahi hue.)</p>
-      </div>
-      <div class="card hot">
-        <h3>CreatorOne — sab kuch ek me</h3>
-        <p><b style="font-size:22px">$29 / mahina</b></p>
-        <p class="muted">Upar wale saare tools ek hi plan me. India pricing abhi tay nahi hui — demo me video wala $29 figure dikhaya gaya hai.</p>
-        <button class="btn" style="margin-top:10px" onclick="toast('Demo plan: checkout abhi connected nahi hai')">Plan lo (demo)</button>
-      </div>
+  <div class="hero">
+    <h1>Every creator tool.<br><span>One simple price.</span></h1>
+    <p>Link-in-bio, bookings, courses, analytics, email and community — creators today pay for all of these separately. CreatorOne puts them on one page, in one plan.</p>
+    <div class="cta">
+      <a class="btn" href="app.html">Try the live demo →</a>
+      <a class="btn ghost" href="#pricing">See pricing</a>
     </div>
   </div>
+  <p class="strip">No more paying for 5+ different apps. One link does it all.</p>
 
-  <!-- ============ DASHBOARD VIEW ============ -->
-  <div id="view-dash" class="hide">
-    <div class="card">
-      <h2>Dashboard — pichhle 7 din</h2>
-      <div class="grid" style="grid-template-columns:repeat(4,1fr)">
-        <div class="stat"><b id="st-views">0</b><span>Profile views</span></div>
-        <div class="stat"><b id="st-clicks">0</b><span>Link clicks</span></div>
-        <div class="stat"><b id="st-subs">0</b><span>Email subscribers</span></div>
-        <div class="stat"><b id="st-book">0</b><span>Bookings</span></div>
-      </div>
-      <div style="margin-top:16px" id="chart"></div>
+  <section id="features">
+    <h2>Everything a creator needs, in one place</h2>
+    <p class="sub">Eight tools that creators usually buy one by one — bundled into a single page and a single plan.</p>
+    <div class="grid">
+      <div class="feat"><div class="ic">🔗</div><h3>Link-in-bio store</h3><p>A mobile-first storefront and link page for everything you sell and share.</p><p class="sep">Sold separately: $29/mo*</p></div>
+      <div class="feat"><div class="ic">📅</div><h3>Bookings</h3><p>Calendar invites and paid calls, booked straight from your page.</p><p class="sep">Sold separately: $15/mo*</p></div>
+      <div class="feat"><div class="ic">🎓</div><h3>Course builder</h3><p>Create and sell courses without a second platform.</p><p class="sep">Sold separately: $119/mo*</p></div>
+      <div class="feat"><div class="ic">📊</div><h3>Audience analytics</h3><p>Views, link clicks, subscribers and bookings in one dashboard.</p><p class="sep">Sold separately: $10/mo*</p></div>
+      <div class="feat"><div class="ic">💬</div><h3>Auto-DMs</h3><p>Automated Instagram replies for your audience. Official API approval required — see FAQ.</p><p class="sep">Sold separately: $15/mo*</p></div>
+      <div class="feat"><div class="ic">✉️</div><h3>Email &amp; newsletter</h3><p>Build your list and email subscribers directly.</p><p class="sep">Sold separately: $29/mo*</p></div>
+      <div class="feat"><div class="ic">🗂️</div><h3>Content library</h3><p>Your social content and resources, organised in one library.</p><p class="sep">Sold separately: $30/mo*</p></div>
+      <div class="feat"><div class="ic">👥</div><h3>Creator community</h3><p>An exclusive space for your most loyal audience.</p><p class="sep">Sold separately: $97/mo*</p></div>
     </div>
+    <p style="text-align:center;color:#9ca3af;font-size:13px;margin-top:16px">*Separate prices as shown in the creator-economy video that inspired this bundle. The video claims a $443/mo total for buying these separately — that figure is the video's claim, not independently verified.</p>
+  </section>
 
-    <div class="card">
-      <h2>Subscribers</h2>
-      <div id="subs-list"></div>
+  <section id="compare">
+    <h2>Buying separately vs CreatorOne</h2>
+    <p class="sub">The same stack, two very different bills.</p>
+    <div class="compare"><table>
+      <tr><th>Tool</th><th>Separately*</th><th>CreatorOne</th></tr>
+      <tr><td>Link-in-bio store</td><td>$29/mo</td><td class="good">Included</td></tr>
+      <tr><td>Bookings &amp; calendar</td><td>$15/mo</td><td class="good">Included</td></tr>
+      <tr><td>Course builder</td><td>$119/mo</td><td class="good">Included</td></tr>
+      <tr><td>Audience analytics</td><td>$10/mo</td><td class="good">Included</td></tr>
+      <tr><td>Instagram auto-DMs</td><td>$15/mo</td><td class="good">Included†</td></tr>
+      <tr><td>Email &amp; newsletter</td><td>$29/mo</td><td class="good">Included</td></tr>
+      <tr><td>Content library</td><td>$30/mo</td><td class="good">Included</td></tr>
+      <tr><td>Creator community</td><td>$97/mo</td><td class="good">Included</td></tr>
+      <tr><td><b>Total</b></td><td><b>$443/mo claimed*</b></td><td><b class="good">₹499/mo</b></td></tr>
+    </table></div>
+    <p style="text-align:center;color:#9ca3af;font-size:13px;margin-top:12px">† Auto-DMs ship after Meta's official API approval. *Separate prices and the $443 total are the video's claims.</p>
+  </section>
+
+  <section id="pricing">
+    <h2>One plan. Everything included.</h2>
+    <p class="sub">No tiers, no add-ons to figure out. Launch pricing for India.</p>
+    <div class="price-wrap"><div class="price-card">
+      <div class="amt">₹499<small>/month</small></div>
+      <p style="color:#4b5563">All 8 tools. One page. One link.</p>
+      <ul>
+        <li>Link-in-bio store</li>
+        <li>Bookings &amp; calendar</li>
+        <li>Course builder</li>
+        <li>Audience analytics dashboard</li>
+        <li>Email &amp; newsletter builder</li>
+        <li>Content library</li>
+        <li>Creator community</li>
+        <li>Instagram auto-DMs (after API approval)</li>
+      </ul>
+      <a class="btn" href="app.html" style="width:100%;text-align:center">Try the live demo →</a>
+      <p style="color:#9ca3af;font-size:13px;margin-top:14px">Preview website — checkout is coming soon. Cancel anytime once billing is live.</p>
+    </div></div>
+  </section>
+
+  <section>
+    <h2>How it works</h2>
+    <div class="steps">
+      <div class="step"><b>1</b><h3 style="margin:8px 0">Create your page</h3><p style="color:#4b5563;font-size:15px">Pick a name, add your photo and bio. Your page is live at one link.</p></div>
+      <div class="step"><b>2</b><h3 style="margin:8px 0">Add your tools</h3><p style="color:#4b5563;font-size:15px">Switch on links, products, bookings, courses, email and community — no other apps needed.</p></div>
+      <div class="step"><b>3</b><h3 style="margin:8px 0">Share one link</h3><p style="color:#4b5563;font-size:15px">Put it in your bio everywhere. Fans buy, book, subscribe and join from that single page.</p></div>
     </div>
+  </section>
 
-    <div class="card">
-      <h2>Bookings</h2>
-      <div id="book-list"></div>
+  <section id="faq">
+    <h2>Questions</h2>
+    <div class="faq">
+      <details><summary>Do I still need Linktree, Calendly or a course platform?</summary><p>No — that is the point. CreatorOne replaces those separate subscriptions with one page and one plan.</p></details>
+      <details><summary>How do Instagram auto-DMs work?</summary><p>Real auto-DMs need Meta's official API approval, which is a formal review process. The demo shows the feature as a placeholder until that approval is in place — we do not use unofficial automation.</p></details>
+      <details><summary>Can I accept payments?</summary><p>Payments are not live on this preview yet. Checkout is coming soon — the demo's Buy and Enroll buttons are placeholders.</p></details>
+      <details><summary>Where does my data live in the demo?</summary><p>The live demo stores everything in your own browser only. A production version will add accounts and cloud storage.</p></details>
+      <details><summary>Is ₹499 the final price?</summary><p>It is the launch price for India. If it changes, existing users will be told before any change applies.</p></details>
     </div>
+  </section>
 
-    <div class="card">
-      <h2>Auto-DM — status</h2>
-      <p class="muted">Instagram auto-DM is demo me sirf ek placeholder hai. Asli auto-DM ke liye Meta ka official API approval chahiye hota hai — bina uske automation Instagram ke rules todta hai, isliye ye feature yahan jaanboojh kar band rakha gaya hai.</p>
+  <section>
+    <div class="banner">
+      <h2>Stop paying for eight apps.</h2>
+      <p>Put your whole creator business on one page — for ₹499 a month.</p>
+      <a class="btn light" href="app.html">Try the live demo →</a>
     </div>
-  </div>
+  </section>
 
-  <footer>CreatorOne MVP demo · Idea source: startup_road ka reel (31 Oct 2026) — "Stan jaisa bundle India me" · Revenue/price figures reel ke dawe hain, independently verify nahi hue.</footer>
+  <footer>
+    CreatorOne — preview website (2026). Idea inspired by a creator-economy bundling case study; revenue and separate-tool price figures shown here are that video's claims, not independently verified.<br>
+    <a href="app.html">Live demo</a> · Built as an MVP preview.
+  </footer>
 </div>
-<div class="toast" id="toast"></div>
-<script>
-const KEY = "creatorone-demo-v1";
-const seed = {
-  links: [
-    {title: "My YouTube channel", url: "https://youtube.com"},
-    {title: "Latest course — Creator Starter", url: "#courses"},
-    {title: "Join my community", url: "#community"}
-  ],
-  products: [
-    {name: "Preset Pack — 50 photo presets", price: "₹499"},
-    {name: "Notion Creator Template", price: "₹299"}
-  ],
-  courses: [
-    {name: "Creator Starter — 0 se 1000 followers", price: "₹999", students: 132},
-    {name: "Reels Editing Masterclass", price: "₹1,499", students: 87}
-  ],
-  bookings: [],
-  subs: ["demo@example.com"],
-  posts: [
-    {text: "Welcome! Yahan courses, bookings aur naye updates sabse pehle milenge."},
-    {text: "Is hafte naya preset pack aa raha hai — store me nazar rakho."}
-  ],
-  stats: {views: 1240, clicks: 386},
-  week: [42, 58, 51, 73, 66, 91, 84]
-};
-let S;
-try { S = JSON.parse(localStorage.getItem(KEY)) || seed; } catch(e) { S = seed; }
-if (!S.week) S.week = seed.week;
-function save(){ localStorage.setItem(KEY, JSON.stringify(S)); }
-function toast(msg){ const t = document.getElementById("toast"); t.textContent = msg; t.style.display = "block"; setTimeout(()=> t.style.display = "none", 2600); }
-function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
-
-function showView(v){
-  document.getElementById("view-store").classList.toggle("hide", v !== "store");
-  document.getElementById("view-dash").classList.toggle("hide", v !== "dash");
-  document.getElementById("btn-store").classList.toggle("on", v === "store");
-  document.getElementById("btn-dash").classList.toggle("on", v === "dash");
-  if (v === "dash") renderDash();
-}
-
-function renderStore(){
-  S.stats.views++;
-  document.getElementById("store-stats").textContent =
-    S.stats.views + " views · " + S.stats.clicks + " link clicks · " + S.subs.length + " subscribers";
-  document.getElementById("links").innerHTML = S.links.map((l,i) =>
-    `<div class="linkrow"><a href="${esc(l.url)}" target="_blank" onclick="clickLink()">${esc(l.title)}</a>
-     <button class="btn ghost small" onclick="delLink(${i})">Hatado</button></div>`).join("") || `<p class="muted">Abhi koi link nahi — upar se jodo.</p>`;
-  document.getElementById("products").innerHTML = S.products.map(p =>
-    `<div class="prodrow"><div><b>${esc(p.name)}</b><div class="muted">Digital download</div></div>
-     <button class="btn small" onclick="toast('Demo: payment abhi connected nahi hai')">Buy — ${esc(p.price)}</button></div>`).join("");
-  const days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-  document.getElementById("slots").innerHTML = days.map((d,i) => {
-    const taken = S.bookings.includes(d);
-    return `<span class="slot ${taken ? "booked" : ""}" ${taken ? "" : `onclick="bookSlot('${d}')"`}>${d} · 6 PM ${taken ? "✓ booked" : ""}</span>`;
-  }).join("");
-  document.getElementById("bookings-mine").innerHTML = S.bookings.length
-    ? `<p class="muted" style="margin-top:8px">Tumhari bookings: ${S.bookings.join(", ")}</p>` : "";
-  document.getElementById("courses").innerHTML = S.courses.map(c =>
-    `<div class="courserow"><div><b>${esc(c.name)}</b><div class="muted">${c.students} students</div></div>
-     <button class="btn small" onclick="enroll('${esc(c.name)}')">Enroll — ${esc(c.price)}</button></div>`).join("");
-  document.getElementById("sub-count").textContent = S.subs.length + " log already subscribed hain.";
-  document.getElementById("posts").innerHTML = S.posts.map(p =>
-    `<div class="post">${esc(p.text)}</div>`).join("");
-  save();
-}
-function clickLink(){ S.stats.clicks++; save(); renderStore(); }
-function delLink(i){ S.links.splice(i,1); save(); renderStore(); }
-function addLink(){
-  const t = document.getElementById("new-link-title").value.trim();
-  const u = document.getElementById("new-link-url").value.trim();
-  if (!t || !u) return toast("Naam aur URL dono likho");
-  S.links.push({title: t, url: u}); save(); renderStore(); toast("Link jud gaya");
-}
-function bookSlot(d){ S.bookings.push(d); save(); renderStore(); toast(d + " · 6 PM booked! (demo)"); }
-function enroll(name){ toast(name + " me enroll ho gaye (demo)"); }
-function subscribe(){
-  const e = document.getElementById("sub-email").value.trim();
-  if (!e || !e.includes("@")) return toast("Sahi email likho");
-  if (S.subs.includes(e)) return toast("Ye email pehle se subscribed hai");
-  S.subs.push(e); save(); renderStore(); toast("Subscribed! Welcome email demo me nahi bheja jata");
-}
-function addPost(){
-  const t = document.getElementById("new-post").value.trim();
-  if (!t) return;
-  S.posts.unshift({text: t}); document.getElementById("new-post").value = ""; save(); renderStore(); toast("Post live ho gaya (demo)");
-}
-function renderDash(){
-  document.getElementById("st-views").textContent = S.stats.views;
-  document.getElementById("st-clicks").textContent = S.stats.clicks;
-  document.getElementById("st-subs").textContent = S.subs.length;
-  document.getElementById("st-book").textContent = S.bookings.length;
-  const max = Math.max(...S.week);
-  const days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-  document.getElementById("chart").innerHTML = "<h3 style='margin-bottom:10px'>Daily profile views</h3>" +
-    S.week.map((v,i) => `<div class="bar-row"><span class="lbl">${days[i]}</span><div class="bar"><i style="width:${Math.round(v/max*100)}%"></i></div><span>${v}</span></div>`).join("");
-  document.getElementById("subs-list").innerHTML = S.subs.map(s => `<div class="linkrow"><span>${esc(s)}</span><span class="muted">subscribed</span></div>`).join("");
-  document.getElementById("book-list").innerHTML = S.bookings.length
-    ? S.bookings.map(b => `<div class="linkrow"><span>${b} · 6 PM</span><span class="muted">intro call</span></div>`).join("")
-    : `<p class="muted">Abhi koi booking nahi.</p>`;
-}
-renderStore();
-</script>
 </body>
 </html>
