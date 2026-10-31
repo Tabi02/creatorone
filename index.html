@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CreatorOne — All-in-one creator platform (MVP demo)</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#f6f6f8;color:#111827;line-height:1.5}
+  .top{position:sticky;top:0;background:#fff;border-bottom:1px solid #e5e7eb;z-index:10}
+  .top-in{max-width:860px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .logo{font-weight:800;font-size:20px;letter-spacing:-.5px}.logo span{color:#6d28d9}
+  .nav{display:flex;gap:8px}
+  .nav button{border:1px solid #e5e7eb;background:#fff;padding:8px 14px;border-radius:999px;cursor:pointer;font-weight:600}
+  .nav button.on{background:#111827;color:#fff;border-color:#111827}
+  .wrap{max-width:860px;margin:0 auto;padding:20px 16px 60px}
+  .note{background:#fef9c3;border:1px solid #fde68a;padding:10px 14px;border-radius:12px;font-size:14px;margin-bottom:18px}
+  .card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:18px;margin-bottom:16px}
+  .profile{display:flex;gap:16px;align-items:center}
+  .avatar{width:72px;height:72px;border-radius:50%;background:#6d28d9;color:#fff;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:800;flex-shrink:0}
+  .profile h1{font-size:22px}.profile p{color:#6b7280;font-size:14px}
+  h2{font-size:18px;margin-bottom:12px} h3{font-size:15px}
+  .linkrow,.prodrow,.courserow,.bookrow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;border:1px solid #e5e7eb;border-radius:12px;margin-bottom:10px}
+  .linkrow a{color:#111827;font-weight:600;text-decoration:none}
+  .muted{color:#6b7280;font-size:13px}
+  .btn{background:#6d28d9;color:#fff;border:0;padding:10px 16px;border-radius:999px;cursor:pointer;font-weight:700}
+  .btn.ghost{background:#fff;color:#111827;border:1px solid #e5e7eb}
+  .btn.small{padding:7px 12px;font-size:13px}
+  input,select,textarea{width:100%;padding:10px 12px;border:1px solid #e5e7eb;border-radius:10px;margin-bottom:10px;font-size:15px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:600px){.grid{grid-template-columns:1fr}}
+  .stat{border:1px solid #e5e7eb;border-radius:12px;padding:14px}
+  .stat b{font-size:22px;display:block}
+  .stat span{color:#6b7280;font-size:13px}
+  .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:13px}
+  .bar-row .lbl{width:40px;color:#6b7280}
+  .bar{height:12px;background:#ede9fe;border-radius:99px;flex:1;overflow:hidden}
+  .bar i{display:block;height:100%;background:#6d28d9}
+  .slot{display:inline-block;border:1px solid #e5e7eb;border-radius:999px;padding:8px 14px;margin:0 8px 8px 0;cursor:pointer;font-weight:600;background:#fff}
+  .slot.booked{background:#dcfce7;border-color:#86efac;color:#166534;cursor:default}
+  .post{border-top:1px solid #f3f4f6;padding:12px 0}.post:first-child{border-top:0}
+  .price{display:flex;gap:12px;flex-wrap:wrap}
+  .price .card{flex:1;min-width:240px;margin-bottom:0}
+  .price .hot{border:2px solid #6d28d9}
+  .strike{text-decoration:line-through;color:#9ca3af}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#111827;color:#fff;padding:12px 20px;border-radius:999px;font-weight:600;display:none;z-index:50}
+  .hide{display:none}
+  footer{color:#6b7280;font-size:13px;text-align:center;padding:10px}
+</style>
+</head>
+<body>
+<div class="top"><div class="top-in">
+  <div class="logo">Creator<span>One</span></div>
+  <div class="nav">
+    <button id="btn-store" class="on" onclick="showView('store')">My Store</button>
+    <button id="btn-dash" onclick="showView('dash')">Dashboard</button>
+  </div>
+</div></div>
+
+<div class="wrap">
+  <div class="note">MVP demo — ye chalti hui demo hai, asli product nahi. Payment, asli Instagram auto-DM aur login abhi isme nahi hain; saara data sirf isi browser me save hota hai.</div>
+
+  <!-- ============ STOREFRONT VIEW ============ -->
+  <div id="view-store">
+    <div class="card profile">
+      <div class="avatar">A</div>
+      <div>
+        <h1>@demo.creator</h1>
+        <p>Digital creator — courses, bookings, newsletter aur community, sab ek hi page par.</p>
+        <p class="muted" id="store-stats"></p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Links</h2>
+      <div id="links"></div>
+      <div class="grid">
+        <input id="new-link-title" placeholder="Link ka naam, jaise: My YouTube">
+        <input id="new-link-url" placeholder="URL, jaise: https://youtube.com/...">
+      </div>
+      <button class="btn small" onclick="addLink()">+ Link jodo</button>
+    </div>
+
+    <div class="card">
+      <h2>Store — Digital products</h2>
+      <div id="products"></div>
+    </div>
+
+    <div class="card">
+      <h2>Book a call</h2>
+      <p class="muted" style="margin-bottom:10px">30 min intro call — slot chuno, booking turant save hogi.</p>
+      <div id="slots"></div>
+      <div id="bookings-mine"></div>
+    </div>
+
+    <div class="card">
+      <h2>Courses</h2>
+      <div id="courses"></div>
+    </div>
+
+    <div class="card">
+      <h2>Newsletter</h2>
+      <p class="muted" style="margin-bottom:10px">Har hafte ek email — naye courses, offers aur posts.</p>
+      <div class="grid">
+        <input id="sub-email" type="email" placeholder="Apna email likho">
+        <button class="btn" onclick="subscribe()">Subscribe</button>
+      </div>
+      <p class="muted" id="sub-count"></p>
+    </div>
+
+    <div class="card">
+      <h2>Community</h2>
+      <div id="posts"></div>
+      <textarea id="new-post" rows="2" placeholder="Community me kuch likho..."></textarea>
+      <button class="btn small" onclick="addPost()">Post karo</button>
+    </div>
+
+    <div class="price">
+      <div class="card">
+        <h3>Alag-alag tools</h3>
+        <p class="strike">$443 / mahina</p>
+        <p class="muted">Link-in-bio, bookings, courses, analytics, auto-DM, email, library, community — sab alag subscription par. (Ye figures us reel ke dawe hain, verify nahi hue.)</p>
+      </div>
+      <div class="card hot">
+        <h3>CreatorOne — sab kuch ek me</h3>
+        <p><b style="font-size:22px">$29 / mahina</b></p>
+        <p class="muted">Upar wale saare tools ek hi plan me. India pricing abhi tay nahi hui — demo me video wala $29 figure dikhaya gaya hai.</p>
+        <button class="btn" style="margin-top:10px" onclick="toast('Demo plan: checkout abhi connected nahi hai')">Plan lo (demo)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ DASHBOARD VIEW ============ -->
+  <div id="view-dash" class="hide">
+    <div class="card">
+      <h2>Dashboard — pichhle 7 din</h2>
+      <div class="grid" style="grid-template-columns:repeat(4,1fr)">
+        <div class="stat"><b id="st-views">0</b><span>Profile views</span></div>
+        <div class="stat"><b id="st-clicks">0</b><span>Link clicks</span></div>
+        <div class="stat"><b id="st-subs">0</b><span>Email subscribers</span></div>
+        <div class="stat"><b id="st-book">0</b><span>Bookings</span></div>
+      </div>
+      <div style="margin-top:16px" id="chart"></div>
+    </div>
+
+    <div class="card">
+      <h2>Subscribers</h2>
+      <div id="subs-list"></div>
+    </div>
+
+    <div class="card">
+      <h2>Bookings</h2>
+      <div id="book-list"></div>
+    </div>
+
+    <div class="card">
+      <h2>Auto-DM — status</h2>
+      <p class="muted">Instagram auto-DM is demo me sirf ek placeholder hai. Asli auto-DM ke liye Meta ka official API approval chahiye hota hai — bina uske automation Instagram ke rules todta hai, isliye ye feature yahan jaanboojh kar band rakha gaya hai.</p>
+    </div>
+  </div>
+
+  <footer>CreatorOne MVP demo · Idea source: startup_road ka reel (31 Oct 2026) — "Stan jaisa bundle India me" · Revenue/price figures reel ke dawe hain, independently verify nahi hue.</footer>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const KEY = "creatorone-demo-v1";
+const seed = {
+  links: [
+    {title: "My YouTube channel", url: "https://youtube.com"},
+    {title: "Latest course — Creator Starter", url: "#courses"},
+    {title: "Join my community", url: "#community"}
+  ],
+  products: [
+    {name: "Preset Pack — 50 photo presets", price: "₹499"},
+    {name: "Notion Creator Template", price: "₹299"}
+  ],
+  courses: [
+    {name: "Creator Starter — 0 se 1000 followers", price: "₹999", students: 132},
+    {name: "Reels Editing Masterclass", price: "₹1,499", students: 87}
+  ],
+  bookings: [],
+  subs: ["demo@example.com"],
+  posts: [
+    {text: "Welcome! Yahan courses, bookings aur naye updates sabse pehle milenge."},
+    {text: "Is hafte naya preset pack aa raha hai — store me nazar rakho."}
+  ],
+  stats: {views: 1240, clicks: 386},
+  week: [42, 58, 51, 73, 66, 91, 84]
+};
+let S;
+try { S = JSON.parse(localStorage.getItem(KEY)) || seed; } catch(e) { S = seed; }
+if (!S.week) S.week = seed.week;
+function save(){ localStorage.setItem(KEY, JSON.stringify(S)); }
+function toast(msg){ const t = document.getElementById("toast"); t.textContent = msg; t.style.display = "block"; setTimeout(()=> t.style.display = "none", 2600); }
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+function showView(v){
+  document.getElementById("view-store").classList.toggle("hide", v !== "store");
+  document.getElementById("view-dash").classList.toggle("hide", v !== "dash");
+  document.getElementById("btn-store").classList.toggle("on", v === "store");
+  document.getElementById("btn-dash").classList.toggle("on", v === "dash");
+  if (v === "dash") renderDash();
+}
+
+function renderStore(){
+  S.stats.views++;
+  document.getElementById("store-stats").textContent =
+    S.stats.views + " views · " + S.stats.clicks + " link clicks · " + S.subs.length + " subscribers";
+  document.getElementById("links").innerHTML = S.links.map((l,i) =>
+    `<div class="linkrow"><a href="${esc(l.url)}" target="_blank" onclick="clickLink()">${esc(l.title)}</a>
+     <button class="btn ghost small" onclick="delLink(${i})">Hatado</button></div>`).join("") || `<p class="muted">Abhi koi link nahi — upar se jodo.</p>`;
+  document.getElementById("products").innerHTML = S.products.map(p =>
+    `<div class="prodrow"><div><b>${esc(p.name)}</b><div class="muted">Digital download</div></div>
+     <button class="btn small" onclick="toast('Demo: payment abhi connected nahi hai')">Buy — ${esc(p.price)}</button></div>`).join("");
+  const days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  document.getElementById("slots").innerHTML = days.map((d,i) => {
+    const taken = S.bookings.includes(d);
+    return `<span class="slot ${taken ? "booked" : ""}" ${taken ? "" : `onclick="bookSlot('${d}')"`}>${d} · 6 PM ${taken ? "✓ booked" : ""}</span>`;
+  }).join("");
+  document.getElementById("bookings-mine").innerHTML = S.bookings.length
+    ? `<p class="muted" style="margin-top:8px">Tumhari bookings: ${S.bookings.join(", ")}</p>` : "";
+  document.getElementById("courses").innerHTML = S.courses.map(c =>
+    `<div class="courserow"><div><b>${esc(c.name)}</b><div class="muted">${c.students} students</div></div>
+     <button class="btn small" onclick="enroll('${esc(c.name)}')">Enroll — ${esc(c.price)}</button></div>`).join("");
+  document.getElementById("sub-count").textContent = S.subs.length + " log already subscribed hain.";
+  document.getElementById("posts").innerHTML = S.posts.map(p =>
+    `<div class="post">${esc(p.text)}</div>`).join("");
+  save();
+}
+function clickLink(){ S.stats.clicks++; save(); renderStore(); }
+function delLink(i){ S.links.splice(i,1); save(); renderStore(); }
+function addLink(){
+  const t = document.getElementById("new-link-title").value.trim();
+  const u = document.getElementById("new-link-url").value.trim();
+  if (!t || !u) return toast("Naam aur URL dono likho");
+  S.links.push({title: t, url: u}); save(); renderStore(); toast("Link jud gaya");
+}
+function bookSlot(d){ S.bookings.push(d); save(); renderStore(); toast(d + " · 6 PM booked! (demo)"); }
+function enroll(name){ toast(name + " me enroll ho gaye (demo)"); }
+function subscribe(){
+  const e = document.getElementById("sub-email").value.trim();
+  if (!e || !e.includes("@")) return toast("Sahi email likho");
+  if (S.subs.includes(e)) return toast("Ye email pehle se subscribed hai");
+  S.subs.push(e); save(); renderStore(); toast("Subscribed! Welcome email demo me nahi bheja jata");
+}
+function addPost(){
+  const t = document.getElementById("new-post").value.trim();
+  if (!t) return;
+  S.posts.unshift({text: t}); document.getElementById("new-post").value = ""; save(); renderStore(); toast("Post live ho gaya (demo)");
+}
+function renderDash(){
+  document.getElementById("st-views").textContent = S.stats.views;
+  document.getElementById("st-clicks").textContent = S.stats.clicks;
+  document.getElementById("st-subs").textContent = S.subs.length;
+  document.getElementById("st-book").textContent = S.bookings.length;
+  const max = Math.max(...S.week);
+  const days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  document.getElementById("chart").innerHTML = "<h3 style='margin-bottom:10px'>Daily profile views</h3>" +
+    S.week.map((v,i) => `<div class="bar-row"><span class="lbl">${days[i]}</span><div class="bar"><i style="width:${Math.round(v/max*100)}%"></i></div><span>${v}</span></div>`).join("");
+  document.getElementById("subs-list").innerHTML = S.subs.map(s => `<div class="linkrow"><span>${esc(s)}</span><span class="muted">subscribed</span></div>`).join("");
+  document.getElementById("book-list").innerHTML = S.bookings.length
+    ? S.bookings.map(b => `<div class="linkrow"><span>${b} · 6 PM</span><span class="muted">intro call</span></div>`).join("")
+    : `<p class="muted">Abhi koi booking nahi.</p>`;
+}
+renderStore();
+</script>
+</body>
+</html>
