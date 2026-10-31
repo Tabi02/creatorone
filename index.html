@@ -7,61 +7,67 @@
 <meta name="description" content="CreatorOne bundles link-in-bio, bookings, courses, analytics, email, community and more into one page for creators, at one simple price.">
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#fff;color:#111827;line-height:1.6}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#fafaf9;color:#1c1917;line-height:1.6;font-variant-numeric:tabular-nums}
   a{color:#6d28d9;text-decoration:none}
-  .top{position:sticky;top:0;background:rgba(255,255,255,.95);border-bottom:1px solid #e5e7eb;z-index:10}
+  .top{position:sticky;top:0;background:rgba(250,250,249,.95);border-bottom:1px solid rgba(0,0,0,.08);z-index:10}
   .top-in{max-width:960px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
   .logo{font-weight:800;font-size:22px;letter-spacing:-.5px}.logo span{color:#6d28d9}
   .top nav{display:flex;gap:20px;align-items:center}
-  .top nav a{color:#374151;font-weight:600;font-size:15px}
+  .top nav a{color:#44403c;font-weight:600;font-size:15px}
+  .top nav a:hover{color:#6d28d9}
   @media(max-width:640px){.top nav a{display:none}.top nav a.btn{display:inline-block}}
-  .btn{display:inline-block;background:#6d28d9;color:#fff;padding:12px 22px;border-radius:999px;font-weight:700;border:0;cursor:pointer}
-  .btn.ghost{background:#fff;color:#111827;border:1px solid #e5e7eb}
+  .btn{display:inline-block;background:#6d28d9;color:#fff;padding:12px 22px;border-radius:999px;font-weight:700;border:0;cursor:pointer;transition:transform .12s ease,background .12s ease}
+  .btn:hover{background:#5b21b6}
+  .btn:active{transform:scale(.98)}
+  .btn:focus-visible{outline:2px solid #6d28d9;outline-offset:2px}
+  .btn.ghost{background:#fff;color:#1c1917;border:1px solid rgba(0,0,0,.12)}
   .btn.light{background:#fff;color:#6d28d9}
   .wrap{max-width:960px;margin:0 auto;padding:0 20px}
   .hero{text-align:center;padding:72px 0 56px}
-  .hero h1{font-size:52px;line-height:1.1;letter-spacing:-1.5px;max-width:720px;margin:0 auto 18px}
+  .hero h1{font-size:52px;line-height:1.05;letter-spacing:-2px;max-width:720px;margin:0 auto 18px}
   @media(max-width:640px){.hero h1{font-size:36px}}
   .hero h1 span{color:#6d28d9}
-  .hero p{font-size:19px;color:#4b5563;max-width:620px;margin:0 auto 28px}
+  .hero p{font-size:19px;color:#57534e;max-width:620px;margin:0 auto 28px}
   .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
   .strip{text-align:center;color:#6b7280;font-weight:600;padding-bottom:56px}
   section{padding:56px 0}
   h2{font-size:32px;letter-spacing:-.5px;text-align:center;margin-bottom:12px}
-  .sub{text-align:center;color:#4b5563;max-width:640px;margin:0 auto 36px;font-size:17px}
+  .sub{text-align:center;color:#57534e;max-width:640px;margin:0 auto 36px;font-size:17px}
   .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
   @media(max-width:860px){.grid{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:520px){.grid{grid-template-columns:1fr}}
-  .feat{border:1px solid #e5e7eb;border-radius:16px;padding:20px}
-  .feat .ic{font-size:26px;margin-bottom:8px}
+  .feat{border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:20px;transition:border-color .12s ease}
+  .feat:hover{border-color:rgba(0,0,0,.16)}
+  .feat .ic{font-size:13px;font-weight:800;letter-spacing:1.5px;color:#6d28d9;margin-bottom:10px}
   .feat h3{font-size:16px;margin-bottom:6px}
-  .feat p{font-size:14px;color:#4b5563}
+  .feat p{font-size:14px;color:#57534e}
   .feat .sep{font-size:13px;color:#9ca3af;margin-top:8px}
   table{width:100%;border-collapse:collapse;font-size:15px}
-  th,td{padding:12px 14px;border-bottom:1px solid #e5e7eb;text-align:left}
+  th,td{padding:12px 14px;border-bottom:1px solid rgba(0,0,0,.08);text-align:left}
   th{color:#6b7280;font-size:13px;text-transform:uppercase;letter-spacing:.5px}
   td:last-child,th:last-child{text-align:right}
   .good{color:#15803d;font-weight:700}
-  .compare{border:1px solid #e5e7eb;border-radius:16px;overflow:hidden}
+  .compare{border:1px solid rgba(0,0,0,.08);border-radius:16px;overflow:hidden}
   .price-wrap{display:flex;justify-content:center}
   .price-card{border:2px solid #6d28d9;border-radius:20px;padding:32px;max-width:480px;width:100%;text-align:center}
   .price-card .amt{font-size:52px;font-weight:800;letter-spacing:-1px}
   .price-card .amt small{font-size:18px;color:#6b7280;font-weight:600}
   .price-card ul{list-style:none;text-align:left;margin:22px 0}
-  .price-card li{padding:8px 0;border-bottom:1px solid #f3f4f6;font-size:15px}
+  .price-card li{padding:8px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:15px}
   .price-card li:before{content:"✓ ";color:#15803d;font-weight:800}
   .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
   @media(max-width:640px){.steps{grid-template-columns:1fr}}
-  .step{border:1px solid #e5e7eb;border-radius:16px;padding:22px}
+  .step{border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:22px;transition:border-color .12s ease}
+  .step:hover{border-color:rgba(0,0,0,.16)}
   .step b{font-size:28px;color:#6d28d9}
   .faq{max-width:720px;margin:0 auto}
-  .faq details{border:1px solid #e5e7eb;border-radius:12px;padding:16px 18px;margin-bottom:12px}
+  .faq details{border:1px solid rgba(0,0,0,.08);border-radius:12px;padding:16px 18px;margin-bottom:12px}
   .faq summary{font-weight:700;cursor:pointer}
   .faq p{color:#4b5563;margin-top:8px;font-size:15px}
-  .banner{background:#111827;color:#fff;border-radius:20px;padding:44px 32px;text-align:center}
+  .banner{background:#1c1917;color:#fff;border-radius:20px;padding:44px 32px;text-align:center}
   .banner h2{color:#fff}
   .banner p{color:#d1d5db;margin:0 auto 24px;max-width:520px}
-  footer{border-top:1px solid #e5e7eb;padding:28px 0 40px;color:#6b7280;font-size:13px;text-align:center}
+  footer{border-top:1px solid rgba(0,0,0,.08);padding:28px 0 40px;color:#6b7280;font-size:13px;text-align:center}
 </style>
 </head>
 <body>
@@ -91,14 +97,14 @@
     <h2>Everything a creator needs, in one place</h2>
     <p class="sub">Eight tools that creators usually buy one by one — bundled into a single page and a single plan.</p>
     <div class="grid">
-      <div class="feat"><div class="ic">🔗</div><h3>Link-in-bio store</h3><p>A mobile-first storefront and link page for everything you sell and share.</p><p class="sep">Sold separately: $29/mo*</p></div>
-      <div class="feat"><div class="ic">📅</div><h3>Bookings</h3><p>Calendar invites and paid calls, booked straight from your page.</p><p class="sep">Sold separately: $15/mo*</p></div>
-      <div class="feat"><div class="ic">🎓</div><h3>Course builder</h3><p>Create and sell courses without a second platform.</p><p class="sep">Sold separately: $119/mo*</p></div>
-      <div class="feat"><div class="ic">📊</div><h3>Audience analytics</h3><p>Views, link clicks, subscribers and bookings in one dashboard.</p><p class="sep">Sold separately: $10/mo*</p></div>
-      <div class="feat"><div class="ic">💬</div><h3>Auto-DMs</h3><p>Automated Instagram replies for your audience. Official API approval required — see FAQ.</p><p class="sep">Sold separately: $15/mo*</p></div>
-      <div class="feat"><div class="ic">✉️</div><h3>Email &amp; newsletter</h3><p>Build your list and email subscribers directly.</p><p class="sep">Sold separately: $29/mo*</p></div>
-      <div class="feat"><div class="ic">🗂️</div><h3>Content library</h3><p>Your social content and resources, organised in one library.</p><p class="sep">Sold separately: $30/mo*</p></div>
-      <div class="feat"><div class="ic">👥</div><h3>Creator community</h3><p>An exclusive space for your most loyal audience.</p><p class="sep">Sold separately: $97/mo*</p></div>
+      <div class="feat"><div class="ic">01</div><h3>Link-in-bio store</h3><p>A mobile-first storefront and link page for everything you sell and share.</p><p class="sep">Sold separately: $29/mo*</p></div>
+      <div class="feat"><div class="ic">02</div><h3>Bookings</h3><p>Calendar invites and paid calls, booked straight from your page.</p><p class="sep">Sold separately: $15/mo*</p></div>
+      <div class="feat"><div class="ic">03</div><h3>Course builder</h3><p>Create and sell courses without a second platform.</p><p class="sep">Sold separately: $119/mo*</p></div>
+      <div class="feat"><div class="ic">04</div><h3>Audience analytics</h3><p>Views, link clicks, subscribers and bookings in one dashboard.</p><p class="sep">Sold separately: $10/mo*</p></div>
+      <div class="feat"><div class="ic">05</div><h3>Auto-DMs</h3><p>Automated Instagram replies for your audience. Official API approval required — see FAQ.</p><p class="sep">Sold separately: $15/mo*</p></div>
+      <div class="feat"><div class="ic">06</div><h3>Email &amp; newsletter</h3><p>Build your list and email subscribers directly.</p><p class="sep">Sold separately: $29/mo*</p></div>
+      <div class="feat"><div class="ic">07</div><h3>Content library</h3><p>Your social content and resources, organised in one library.</p><p class="sep">Sold separately: $30/mo*</p></div>
+      <div class="feat"><div class="ic">08</div><h3>Creator community</h3><p>An exclusive space for your most loyal audience.</p><p class="sep">Sold separately: $97/mo*</p></div>
     </div>
     <p style="text-align:center;color:#9ca3af;font-size:13px;margin-top:16px">*Separate prices as shown in the creator-economy video that inspired this bundle. The video claims a $443/mo total for buying these separately — that figure is the video's claim, not independently verified.</p>
   </section>
