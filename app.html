@@ -67,7 +67,7 @@
 </div></div>
 
 <div class="wrap">
-  <div class="note">MVP demo — ye chalti hui demo hai, asli product nahi. Payment, asli Instagram auto-DM aur login abhi isme nahi hain; saara data sirf isi browser me save hota hai.</div>
+  <div class="note">MVP demo — this is a working demo, not the real product. Payments, real Instagram auto-DMs and login are not in it yet; all data is saved only in this browser.</div>
 
   <!-- ============ STOREFRONT VIEW ============ -->
   <div id="view-store">
@@ -75,7 +75,7 @@
       <div class="avatar">A</div>
       <div>
         <h1>@demo.creator</h1>
-        <p>Digital creator — courses, bookings, newsletter aur community, sab ek hi page par.</p>
+        <p>Digital creator — courses, bookings, newsletter and community, all on one page.</p>
         <p class="muted" id="store-stats"></p>
       </div>
     </div>
@@ -84,10 +84,10 @@
       <h2>Links</h2>
       <div id="links"></div>
       <div class="grid">
-        <input id="new-link-title" placeholder="Link ka naam, jaise: My YouTube">
-        <input id="new-link-url" placeholder="URL, jaise: https://youtube.com/...">
+        <input id="new-link-title" placeholder="Link name, e.g.: My YouTube">
+        <input id="new-link-url" placeholder="URL, e.g.: https://youtube.com/...">
       </div>
-      <button class="btn small" onclick="addLink()">+ Link jodo</button>
+      <button class="btn small" onclick="addLink()">+ Add link</button>
     </div>
 
     <div class="card">
@@ -97,7 +97,7 @@
 
     <div class="card">
       <h2>Book a call</h2>
-      <p class="muted" style="margin-bottom:10px">30 min intro call — slot chuno, booking turant save hogi.</p>
+      <p class="muted" style="margin-bottom:10px">30 min intro call — pick a slot, booking saves instantly.</p>
       <div id="slots"></div>
       <div id="bookings-mine"></div>
     </div>
@@ -109,9 +109,9 @@
 
     <div class="card">
       <h2>Newsletter</h2>
-      <p class="muted" style="margin-bottom:10px">Har hafte ek email — naye courses, offers aur posts.</p>
+      <p class="muted" style="margin-bottom:10px">One email every week — new courses, offers and posts.</p>
       <div class="grid">
-        <input id="sub-email" type="email" placeholder="Apna email likho">
+        <input id="sub-email" type="email" placeholder="Your email">
         <button class="btn" onclick="subscribe()">Subscribe</button>
       </div>
       <p class="muted" id="sub-count"></p>
@@ -120,21 +120,21 @@
     <div class="card">
       <h2>Community</h2>
       <div id="posts"></div>
-      <textarea id="new-post" rows="2" placeholder="Community me kuch likho..."></textarea>
-      <button class="btn small" onclick="addPost()">Post karo</button>
+      <textarea id="new-post" rows="2" placeholder="Write something in the community..."></textarea>
+      <button class="btn small" onclick="addPost()">Post</button>
     </div>
 
     <div class="price">
       <div class="card">
         <h3>Alag-alag tools</h3>
-        <p class="strike">₹39,000 / mahina (lagbhag)</p>
-        <p class="muted">Link-in-bio, bookings, courses, analytics, auto-DM, email, library, community — sab alag subscription par. (Ye figures us reel ke dawe hain, verify nahi hue.)</p>
+        <p class="strike">₹39,000 / month (approx.)</p>
+        <p class="muted">Link-in-bio, bookings, courses, analytics, auto-DM, email, library, community — each on a separate subscription. (These figures are the reel’s claims, not verified.)</p>
       </div>
       <div class="card hot">
         <h3>CreatorOne — sab kuch ek me</h3>
         <p><b style="font-size:22px">FREE</b></p>
-        <p class="muted">Upar wale saare tools ek hi plan me. Free — sab kuch included.</p>
-        <button class="btn" style="margin-top:10px" onclick="toast('Free plan — koi payment nahi chahiye (demo)')">Free plan (demo)</button>
+        <p class="muted">All the tools above in a single plan. Free — everything included.</p>
+        <button class="btn" style="margin-top:10px" onclick="toast('Free plan — no payment needed (demo)')">Free plan (demo)</button>
       </div>
     </div>
   </div>
@@ -142,7 +142,7 @@
   <!-- ============ DASHBOARD VIEW ============ -->
   <div id="view-dash" class="hide">
     <div class="card">
-      <h2>Dashboard — pichhle 7 din</h2>
+      <h2>Dashboard — last 7 days</h2>
       <div class="grid" style="grid-template-columns:repeat(4,1fr)">
         <div class="stat"><b id="st-views">0</b><span>Profile views</span></div>
         <div class="stat"><b id="st-clicks">0</b><span>Link clicks</span></div>
@@ -164,15 +164,15 @@
 
     <div class="card">
       <h2>Auto-DM — status</h2>
-      <p class="muted">Instagram auto-DM is demo me sirf ek placeholder hai. Asli auto-DM ke liye Meta ka official API approval chahiye hota hai — bina uske automation Instagram ke rules todta hai, isliye ye feature yahan jaanboojh kar band rakha gaya hai.</p>
+      <p class="muted">Instagram auto-DM in this demo is only a placeholder. Real auto-DMs need Meta’s official API approval — without it, automation breaks Instagram’s rules, so this feature is deliberately kept off here.</p>
     </div>
   </div>
 
-  <footer>CreatorOne MVP demo · Idea source: startup_road ka reel (31 Oct 2026) — "Stan jaisa bundle India me" · Revenue/price figures reel ke dawe hain, independently verify nahi hue.</footer>
+  <footer>CreatorOne MVP demo · Idea source: startup_road’s reel (31 Oct 2026) — “Stan-style bundle for India” · Revenue/price figures are the reel’s claims, not independently verified.</footer>
 </div>
 <div class="toast" id="toast"></div>
 <script>
-const KEY = "creatorone-demo-v1";
+const KEY = "creatorone-demo-v2";
 const seed = {
   links: [
     {title: "My YouTube channel", url: "https://youtube.com"},
@@ -184,14 +184,14 @@ const seed = {
     {name: "Notion Creator Template", price: "₹299"}
   ],
   courses: [
-    {name: "Creator Starter — 0 se 1000 followers", price: "₹999", students: 132},
+    {name: "Creator Starter — 0 to 1000 followers", price: "₹999", students: 132},
     {name: "Reels Editing Masterclass", price: "₹1,499", students: 87}
   ],
   bookings: [],
   subs: ["demo@example.com"],
   posts: [
-    {text: "Welcome! Yahan courses, bookings aur naye updates sabse pehle milenge."},
-    {text: "Is hafte naya preset pack aa raha hai — store me nazar rakho."}
+    {text: "Welcome! Courses, bookings and new updates will reach you here first."},
+    {text: "A new preset pack is coming this week — keep an eye on the store."}
   ],
   stats: {views: 1240, clicks: 386},
   week: [42, 58, 51, 73, 66, 91, 84]
@@ -217,21 +217,21 @@ function renderStore(){
     S.stats.views + " views · " + S.stats.clicks + " link clicks · " + S.subs.length + " subscribers";
   document.getElementById("links").innerHTML = S.links.map((l,i) =>
     `<div class="linkrow"><a href="${esc(l.url)}" target="_blank" onclick="clickLink()">${esc(l.title)}</a>
-     <button class="btn ghost small" onclick="delLink(${i})">Hatado</button></div>`).join("") || `<p class="muted">Abhi koi link nahi — upar se jodo.</p>`;
+     <button class="btn ghost small" onclick="delLink(${i})">Remove</button></div>`).join("") || `<p class="muted">No links yet — add one above.</p>`;
   document.getElementById("products").innerHTML = S.products.map(p =>
     `<div class="prodrow"><div><b>${esc(p.name)}</b><div class="muted">Digital download</div></div>
-     <button class="btn small" onclick="toast('Demo: payment abhi connected nahi hai')">Buy — ${esc(p.price)}</button></div>`).join("");
+     <button class="btn small" onclick="toast('Demo: payment is not connected yet')">Buy — ${esc(p.price)}</button></div>`).join("");
   const days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
   document.getElementById("slots").innerHTML = days.map((d,i) => {
     const taken = S.bookings.includes(d);
     return `<span class="slot ${taken ? "booked" : ""}" ${taken ? "" : `onclick="bookSlot('${d}')"`}>${d} · 6 PM ${taken ? "✓ booked" : ""}</span>`;
   }).join("");
   document.getElementById("bookings-mine").innerHTML = S.bookings.length
-    ? `<p class="muted" style="margin-top:8px">Tumhari bookings: ${S.bookings.join(", ")}</p>` : "";
+    ? `<p class="muted" style="margin-top:8px">Your bookings: ${S.bookings.join(", ")}</p>` : "";
   document.getElementById("courses").innerHTML = S.courses.map(c =>
     `<div class="courserow"><div><b>${esc(c.name)}</b><div class="muted">${c.students} students</div></div>
      <button class="btn small" onclick="enroll('${esc(c.name)}')">Enroll — ${esc(c.price)}</button></div>`).join("");
-  document.getElementById("sub-count").textContent = S.subs.length + " log already subscribed hain.";
+  document.getElementById("sub-count").textContent = S.subs.length + " people already subscribed.";
   document.getElementById("posts").innerHTML = S.posts.map(p =>
     `<div class="post">${esc(p.text)}</div>`).join("");
   save();
@@ -241,21 +241,21 @@ function delLink(i){ S.links.splice(i,1); save(); renderStore(); }
 function addLink(){
   const t = document.getElementById("new-link-title").value.trim();
   const u = document.getElementById("new-link-url").value.trim();
-  if (!t || !u) return toast("Naam aur URL dono likho");
-  S.links.push({title: t, url: u}); save(); renderStore(); toast("Link jud gaya");
+  if (!t || !u) return toast("Enter both a name and a URL");
+  S.links.push({title: t, url: u}); save(); renderStore(); toast("Link added");
 }
 function bookSlot(d){ S.bookings.push(d); save(); renderStore(); toast(d + " · 6 PM booked! (demo)"); }
-function enroll(name){ toast(name + " me enroll ho gaye (demo)"); }
+function enroll(name){ toast(name + " — enrolled (demo)"); }
 function subscribe(){
   const e = document.getElementById("sub-email").value.trim();
-  if (!e || !e.includes("@")) return toast("Sahi email likho");
-  if (S.subs.includes(e)) return toast("Ye email pehle se subscribed hai");
-  S.subs.push(e); save(); renderStore(); toast("Subscribed! Welcome email demo me nahi bheja jata");
+  if (!e || !e.includes("@")) return toast("Enter a valid email");
+  if (S.subs.includes(e)) return toast("This email is already subscribed");
+  S.subs.push(e); save(); renderStore(); toast("Subscribed! Welcome email is not sent in the demo");
 }
 function addPost(){
   const t = document.getElementById("new-post").value.trim();
   if (!t) return;
-  S.posts.unshift({text: t}); document.getElementById("new-post").value = ""; save(); renderStore(); toast("Post live ho gaya (demo)");
+  S.posts.unshift({text: t}); document.getElementById("new-post").value = ""; save(); renderStore(); toast("Post is live (demo)");
 }
 function renderDash(){
   document.getElementById("st-views").textContent = S.stats.views;
@@ -269,7 +269,7 @@ function renderDash(){
   document.getElementById("subs-list").innerHTML = S.subs.map(s => `<div class="linkrow"><span>${esc(s)}</span><span class="muted">subscribed</span></div>`).join("");
   document.getElementById("book-list").innerHTML = S.bookings.length
     ? S.bookings.map(b => `<div class="linkrow"><span>${b} · 6 PM</span><span class="muted">intro call</span></div>`).join("")
-    : `<p class="muted">Abhi koi booking nahi.</p>`;
+    : `<p class="muted">No bookings yet.</p>`;
 }
 renderStore();
 </script>
