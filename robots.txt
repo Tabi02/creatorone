@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://tabi02.github.io/creatorone/sitemap.xml
