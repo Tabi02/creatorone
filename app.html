@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="logo-mark.svg">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CreatorOne — Create your page</title>
 <meta name="description" content="CreatorOne: create your free creator page — links, products, courses, bookings, newsletter and community, with real analytics.">
@@ -11,6 +12,7 @@
   a{color:#171717;text-decoration:none}
   .top{position:sticky;top:0;background:rgba(247,247,245,.88);backdrop-filter:blur(12px);border-bottom:1px solid #e7e7e3;z-index:10}
   .top-in{max-width:880px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .logo-img{height:28px;width:auto;display:block}
   .logo{font-weight:700;font-size:19px;letter-spacing:-.4px}.logo span{color:#171717}
   .nav{display:flex;gap:8px;flex-wrap:wrap}
   .nav button{border:1px solid #e0e0dc;background:#fff;padding:8px 14px;border-radius:999px;cursor:pointer;font-weight:600;font-size:14px;color:#171717;transition:border-color .15s ease,background .15s ease}
@@ -54,7 +56,7 @@
 </head>
 <body>
 <div class="top"><div class="top-in">
-  <div class="logo">Creator<span>One</span></div>
+  <img class="logo-img" src="logo.svg" alt="CreatorOne" height="28">
   <div class="nav" id="topnav">
     <button id="btn-page" onclick="showOwnerTab('page')">My Page</button>
     <button id="btn-dash" onclick="showOwnerTab('dash')">Dashboard</button>
