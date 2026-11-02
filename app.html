@@ -6,43 +6,50 @@
 <title>CreatorOne — Create your page</title>
 <meta name="description" content="CreatorOne: create your free creator page — links, products, courses, bookings, newsletter and community, with real analytics.">
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#fafaf9;color:#1c1917;line-height:1.55;font-variant-numeric:tabular-nums}
-  a{color:#6d28d9;text-decoration:none}
-  .top{position:sticky;top:0;background:rgba(250,250,249,.95);border-bottom:1px solid rgba(0,0,0,.08);z-index:10}
-  .top-in{max-width:860px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-  .logo{font-weight:800;font-size:20px;letter-spacing:-.5px}.logo span{color:#6d28d9}
+*{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#f7f7f5;color:#171717;line-height:1.55;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+  a{color:#171717;text-decoration:none}
+  .top{position:sticky;top:0;background:rgba(247,247,245,.88);backdrop-filter:blur(12px);border-bottom:1px solid #e7e7e3;z-index:10}
+  .top-in{max-width:880px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .logo{font-weight:700;font-size:19px;letter-spacing:-.4px}.logo span{color:#171717}
   .nav{display:flex;gap:8px;flex-wrap:wrap}
-  .nav button{border:1px solid rgba(0,0,0,.12);background:#fff;padding:8px 14px;border-radius:999px;cursor:pointer;font-weight:600}
-  .nav button.on{background:#1c1917;color:#fff;border-color:#1c1917}
-  .wrap{max-width:860px;margin:0 auto;padding:20px 16px 60px}
-  .note{background:#ede9fe;border:1px solid #ddd6fe;padding:10px 14px;border-radius:12px;font-size:14px;margin-bottom:18px}
-  .card{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:18px;margin-bottom:16px}
+  .nav button{border:1px solid #e0e0dc;background:#fff;padding:8px 14px;border-radius:999px;cursor:pointer;font-weight:600;font-size:14px;color:#171717;transition:border-color .15s ease,background .15s ease}
+  .nav button:hover{border-color:#c9c9c4}
+  .nav button.on{background:#171717;color:#fff;border-color:#171717}
+  .wrap{max-width:880px;margin:0 auto;padding:24px 20px 60px}
+  .note{background:#fff;border:1px solid #e7e7e3;padding:12px 14px;border-radius:12px;font-size:14px;margin-bottom:16px}
+  .card{background:#fff;border:1px solid #e7e7e3;border-radius:14px;padding:20px;margin-bottom:14px}
   .profile{display:flex;gap:16px;align-items:center}
-  .avatar{width:72px;height:72px;border-radius:50%;background:#6d28d9;color:#fff;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:800;flex-shrink:0}
-  .profile h1{font-size:22px;letter-spacing:-.3px}.profile p{color:#57534e;font-size:14px}
-  h2{font-size:18px;margin-bottom:12px;letter-spacing:-.2px} h3{font-size:15px}
-  .row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;border:1px solid rgba(0,0,0,.08);border-radius:12px;margin-bottom:10px}
-  .row a{color:#1c1917;font-weight:600}.row a:hover{color:#6d28d9}
-  .muted{color:#78716c;font-size:13px}
-  .btn{background:#6d28d9;color:#fff;border:0;padding:10px 16px;border-radius:999px;cursor:pointer;font-weight:700}
-  .btn:hover{background:#5b21b6}
-  .btn.ghost{background:#fff;color:#1c1917;border:1px solid rgba(0,0,0,.12)}
+  .avatar{width:72px;height:72px;border-radius:50%;background:#171717;color:#fff;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:700;flex-shrink:0}
+  .profile h1{font-size:22px;letter-spacing:-.3px}.profile p{color:#5c5c5c;font-size:14px}
+  h2{font-size:18px;margin-bottom:12px;letter-spacing:-.2px;font-weight:700} h3{font-size:15px;font-weight:600}
+  .row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;border:1px solid #ececea;border-radius:12px;margin-bottom:10px}
+  .row a{color:#171717;font-weight:600}.row a:hover{color:#5c5c5c}
+  .muted{color:#6f6f6a;font-size:13px}
+  .btn{background:#171717;color:#fff;border:1px solid #171717;padding:10px 16px;border-radius:999px;cursor:pointer;font-weight:600;font-size:14px;transition:background .15s ease,transform .15s ease}
+  .btn:hover{background:#333}
+  .btn:active{transform:scale(.98)}
+  .btn:focus-visible{outline:2px solid #171717;outline-offset:3px}
+  .btn.ghost{background:#fff;color:#171717;border:1px solid #e0e0dc}
+  .btn.ghost:hover{border-color:#c9c9c4;background:#fff}
   .btn.small{padding:7px 12px;font-size:13px}
-  input,select,textarea{width:100%;padding:10px 12px;border:1px solid rgba(0,0,0,.12);border-radius:10px;margin-bottom:10px;font-size:15px;background:#fff}
+  input,select,textarea{width:100%;padding:11px 12px;border:1px solid #e0e0dc;border-radius:10px;margin-bottom:10px;font-size:15px;background:#fff;color:#171717}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:#171717;box-shadow:0 0 0 3px rgba(0,0,0,.06)}
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   @media(max-width:600px){.grid{grid-template-columns:1fr}}
-  .stat{border:1px solid rgba(0,0,0,.08);border-radius:12px;padding:14px}
-  .stat b{font-size:22px;display:block}.stat span{color:#78716c;font-size:13px}
-  .slot{display:inline-block;border:1px solid rgba(0,0,0,.12);border-radius:999px;padding:8px 14px;margin:0 8px 8px 0;cursor:pointer;font-weight:600;background:#fff}
-  .slot.sel{background:#1c1917;color:#fff;border-color:#1c1917}
-  .post{border-top:1px solid rgba(0,0,0,.06);padding:12px 0}.post:first-child{border-top:0}
-  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1c1917;color:#fff;padding:12px 20px;border-radius:999px;font-weight:600;display:none;z-index:50;max-width:90vw;text-align:center}
+  .stat{border:1px solid #ececea;border-radius:12px;padding:14px;background:#fafaf8}
+  .stat b{font-size:22px;display:block}.stat span{color:#6f6f6a;font-size:13px}
+  .slot{display:inline-block;border:1px solid #e0e0dc;border-radius:999px;padding:8px 14px;margin:0 8px 8px 0;cursor:pointer;font-weight:600;background:#fff;font-size:14px}
+  .slot:hover{border-color:#c9c9c4}
+  .slot.sel{background:#171717;color:#fff;border-color:#171717}
+  .post{border-top:1px solid #f0f0ee;padding:12px 0}.post:first-child{border-top:0}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#171717;color:#fff;padding:12px 20px;border-radius:999px;font-weight:600;display:none;z-index:50;max-width:90vw;text-align:center;font-size:14px}
   .hide{display:none}
   .tabs{display:flex;gap:8px;margin-bottom:14px}
-  .tabs button{border:1px solid rgba(0,0,0,.12);background:#fff;padding:9px 18px;border-radius:999px;cursor:pointer;font-weight:700}
-  .tabs button.on{background:#6d28d9;color:#fff;border-color:#6d28d9}
-  footer{color:#78716c;font-size:13px;text-align:center;padding:10px}
+  .tabs button{border:1px solid #e0e0dc;background:#fff;padding:9px 18px;border-radius:999px;cursor:pointer;font-weight:600;font-size:14px}
+  .tabs button:hover{border-color:#c9c9c4}
+  .tabs button.on{background:#171717;color:#fff;border-color:#171717}
+  footer{color:#8a8a85;font-size:13px;text-align:center;padding:10px}
 </style>
 </head>
 <body>
