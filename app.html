@@ -3,275 +3,356 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CreatorOne — All-in-one creator platform (MVP demo)</title>
+<title>CreatorOne — Create your page</title>
+<meta name="description" content="CreatorOne: create your free creator page — links, products, courses, bookings, newsletter and community, with real analytics.">
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#fafaf9;color:#1c1917;line-height:1.55;font-variant-numeric:tabular-nums}
+  a{color:#6d28d9;text-decoration:none}
   .top{position:sticky;top:0;background:rgba(250,250,249,.95);border-bottom:1px solid rgba(0,0,0,.08);z-index:10}
-  .top-in{max-width:860px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .top-in{max-width:860px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
   .logo{font-weight:800;font-size:20px;letter-spacing:-.5px}.logo span{color:#6d28d9}
-  .nav{display:flex;gap:8px}
-  .nav button{border:1px solid rgba(0,0,0,.12);background:#fff;padding:8px 14px;border-radius:999px;cursor:pointer;font-weight:600;transition:background .12s ease,transform .12s ease}
-  .nav button:hover{border-color:rgba(0,0,0,.24)}
-  .nav button:active{transform:scale(.97)}
-  .nav button:focus-visible{outline:2px solid #6d28d9;outline-offset:2px}
+  .nav{display:flex;gap:8px;flex-wrap:wrap}
+  .nav button{border:1px solid rgba(0,0,0,.12);background:#fff;padding:8px 14px;border-radius:999px;cursor:pointer;font-weight:600}
   .nav button.on{background:#1c1917;color:#fff;border-color:#1c1917}
   .wrap{max-width:860px;margin:0 auto;padding:20px 16px 60px}
-  .note{background:#fef9c3;border:1px solid #fde68a;padding:10px 14px;border-radius:12px;font-size:14px;margin-bottom:18px}
+  .note{background:#ede9fe;border:1px solid #ddd6fe;padding:10px 14px;border-radius:12px;font-size:14px;margin-bottom:18px}
   .card{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:18px;margin-bottom:16px}
   .profile{display:flex;gap:16px;align-items:center}
   .avatar{width:72px;height:72px;border-radius:50%;background:#6d28d9;color:#fff;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:800;flex-shrink:0}
   .profile h1{font-size:22px;letter-spacing:-.3px}.profile p{color:#57534e;font-size:14px}
   h2{font-size:18px;margin-bottom:12px;letter-spacing:-.2px} h3{font-size:15px}
-  .linkrow,.prodrow,.courserow,.bookrow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;border:1px solid rgba(0,0,0,.08);border-radius:12px;margin-bottom:10px}
-  .linkrow a{color:#1c1917;font-weight:600;text-decoration:none}
-  .linkrow a:hover{color:#6d28d9}
+  .row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;border:1px solid rgba(0,0,0,.08);border-radius:12px;margin-bottom:10px}
+  .row a{color:#1c1917;font-weight:600}.row a:hover{color:#6d28d9}
   .muted{color:#78716c;font-size:13px}
-  .btn{background:#6d28d9;color:#fff;border:0;padding:10px 16px;border-radius:999px;cursor:pointer;font-weight:700;transition:background .12s ease,transform .12s ease}
+  .btn{background:#6d28d9;color:#fff;border:0;padding:10px 16px;border-radius:999px;cursor:pointer;font-weight:700}
   .btn:hover{background:#5b21b6}
-  .btn:active{transform:scale(.97)}
-  .btn:focus-visible{outline:2px solid #6d28d9;outline-offset:2px}
   .btn.ghost{background:#fff;color:#1c1917;border:1px solid rgba(0,0,0,.12)}
   .btn.small{padding:7px 12px;font-size:13px}
   input,select,textarea{width:100%;padding:10px 12px;border:1px solid rgba(0,0,0,.12);border-radius:10px;margin-bottom:10px;font-size:15px;background:#fff}
-  input:focus-visible,textarea:focus-visible{outline:2px solid #6d28d9;outline-offset:1px;border-color:#6d28d9}
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   @media(max-width:600px){.grid{grid-template-columns:1fr}}
   .stat{border:1px solid rgba(0,0,0,.08);border-radius:12px;padding:14px}
-  .stat b{font-size:22px;display:block}
-  .stat span{color:#78716c;font-size:13px}
-  .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:13px}
-  .bar-row .lbl{width:40px;color:#78716c}
-  .bar{height:12px;background:#ede9fe;border-radius:99px;flex:1;overflow:hidden}
-  .bar i{display:block;height:100%;background:#6d28d9}
-  .slot{display:inline-block;border:1px solid rgba(0,0,0,.12);border-radius:999px;padding:8px 14px;margin:0 8px 8px 0;cursor:pointer;font-weight:600;background:#fff;transition:border-color .12s ease}
-  .slot:hover{border-color:#6d28d9}
-  .slot.booked{background:#dcfce7;border-color:#86efac;color:#166534;cursor:default}
+  .stat b{font-size:22px;display:block}.stat span{color:#78716c;font-size:13px}
+  .slot{display:inline-block;border:1px solid rgba(0,0,0,.12);border-radius:999px;padding:8px 14px;margin:0 8px 8px 0;cursor:pointer;font-weight:600;background:#fff}
+  .slot.sel{background:#1c1917;color:#fff;border-color:#1c1917}
   .post{border-top:1px solid rgba(0,0,0,.06);padding:12px 0}.post:first-child{border-top:0}
-  .price{display:flex;gap:12px;flex-wrap:wrap}
-  .price .card{flex:1;min-width:240px;margin-bottom:0}
-  .price .hot{border:2px solid #6d28d9}
-  .strike{text-decoration:line-through;color:#a8a29e}
-  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1c1917;color:#fff;padding:12px 20px;border-radius:999px;font-weight:600;display:none;z-index:50}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1c1917;color:#fff;padding:12px 20px;border-radius:999px;font-weight:600;display:none;z-index:50;max-width:90vw;text-align:center}
   .hide{display:none}
+  .tabs{display:flex;gap:8px;margin-bottom:14px}
+  .tabs button{border:1px solid rgba(0,0,0,.12);background:#fff;padding:9px 18px;border-radius:999px;cursor:pointer;font-weight:700}
+  .tabs button.on{background:#6d28d9;color:#fff;border-color:#6d28d9}
   footer{color:#78716c;font-size:13px;text-align:center;padding:10px}
 </style>
 </head>
 <body>
 <div class="top"><div class="top-in">
   <div class="logo">Creator<span>One</span></div>
-  <div class="nav">
-    <button id="btn-store" class="on" onclick="showView('store')">My Store</button>
-    <button id="btn-dash" onclick="showView('dash')">Dashboard</button>
+  <div class="nav" id="topnav">
+    <button id="btn-page" onclick="showOwnerTab('page')">My Page</button>
+    <button id="btn-dash" onclick="showOwnerTab('dash')">Dashboard</button>
+    <button id="btn-logout" class="hide" onclick="logout()">Log out</button>
   </div>
 </div></div>
-
 <div class="wrap">
-  <div class="note">MVP demo — this is a working demo, not the real product. Payments, real Instagram auto-DMs and login are not in it yet; all data is saved only in this browser.</div>
-
-  <!-- ============ STOREFRONT VIEW ============ -->
-  <div id="view-store">
-    <div class="card profile">
-      <div class="avatar">A</div>
-      <div>
-        <h1>@demo.creator</h1>
-        <p>Digital creator — courses, bookings, newsletter and community, all on one page.</p>
-        <p class="muted" id="store-stats"></p>
+  <div id="view-auth" class="hide">
+    <div class="card">
+      <h2>Create your free CreatorOne page</h2>
+      <p class="muted" style="margin-bottom:14px">One account, one public page. Free for everyone — no card required. Your page is stored in CreatorOne's database, so it works from any device after you log in.</p>
+      <div class="tabs">
+        <button id="tab-signup" class="on" onclick="setAuthTab('signup')">Sign up</button>
+        <button id="tab-login" onclick="setAuthTab('login')">Log in</button>
       </div>
+      <div id="signup-fields">
+        <div class="grid">
+          <input id="su-handle" placeholder="Handle — e.g. tayyabcreates (3-30, letters/numbers/_)" autocomplete="username">
+          <input id="su-name" placeholder="Display name — e.g. Tayyab">
+        </div>
+      </div>
+      <input id="auth-email" type="email" placeholder="Email" autocomplete="email">
+      <input id="auth-pass" type="password" placeholder="Password (at least 8 characters)" autocomplete="current-password">
+      <button class="btn" id="auth-btn" onclick="submitAuth()">Create my free page</button>
+      <p class="muted" id="auth-msg" style="margin-top:10px"></p>
+      <p class="muted" style="margin-top:10px">Payments are not connected yet, and Instagram auto-DMs need Meta's official API approval — those two features stay clearly labelled as not live. Everything else here is real: your page, links, products, courses, bookings, subscribers and analytics.</p>
     </div>
-
+  </div>
+  <div id="view-owner-page" class="hide">
+    <div class="note" id="owner-note"></div>
+    <div class="card">
+      <h2>Your profile</h2>
+      <div class="grid">
+        <input id="me-name" placeholder="Display name">
+        <input id="me-handle-view" placeholder="Handle" disabled>
+      </div>
+      <textarea id="me-bio" rows="2" placeholder="Bio — what do you create?"></textarea>
+      <button class="btn small" onclick="saveProfile()">Save profile</button>
+      <button class="btn ghost small" onclick="copyPublicLink()">Copy public page link</button>
+      <p class="muted" id="public-link" style="margin-top:10px"></p>
+    </div>
     <div class="card">
       <h2>Links</h2>
-      <div id="links"></div>
+      <div id="owner-links"></div>
       <div class="grid">
-        <input id="new-link-title" placeholder="Link name, e.g.: My YouTube">
-        <input id="new-link-url" placeholder="URL, e.g.: https://youtube.com/...">
+        <input id="new-link-title" placeholder="Link name, e.g. My YouTube">
+        <input id="new-link-url" placeholder="URL, e.g. https://youtube.com/...">
       </div>
       <button class="btn small" onclick="addLink()">+ Add link</button>
     </div>
-
     <div class="card">
-      <h2>Store — Digital products</h2>
-      <div id="products"></div>
+      <h2>Products</h2>
+      <div id="owner-products"></div>
+      <div class="grid">
+        <input id="new-prod-name" placeholder="Product name">
+        <input id="new-prod-price" placeholder="Price, e.g. 499">
+      </div>
+      <input id="new-prod-desc" placeholder="Short description (optional)">
+      <button class="btn small" onclick="addProduct()">+ Add product</button>
+      <p class="muted" style="margin-top:8px">Buy buttons on your public page are listings only until payments are connected — no money is taken.</p>
     </div>
-
-    <div class="card">
-      <h2>Book a call</h2>
-      <p class="muted" style="margin-bottom:10px">30 min intro call — pick a slot, booking saves instantly.</p>
-      <div id="slots"></div>
-      <div id="bookings-mine"></div>
-    </div>
-
     <div class="card">
       <h2>Courses</h2>
-      <div id="courses"></div>
-    </div>
-
-    <div class="card">
-      <h2>Newsletter</h2>
-      <p class="muted" style="margin-bottom:10px">One email every week — new courses, offers and posts.</p>
+      <div id="owner-courses"></div>
       <div class="grid">
-        <input id="sub-email" type="email" placeholder="Your email">
-        <button class="btn" onclick="subscribe()">Subscribe</button>
+        <input id="new-course-name" placeholder="Course name">
+        <input id="new-course-price" placeholder="Price, e.g. 999">
       </div>
-      <p class="muted" id="sub-count"></p>
+      <input id="new-course-desc" placeholder="Short description (optional)">
+      <button class="btn small" onclick="addCourse()">+ Add course</button>
     </div>
-
     <div class="card">
       <h2>Community</h2>
-      <div id="posts"></div>
-      <textarea id="new-post" rows="2" placeholder="Write something in the community..."></textarea>
+      <div id="owner-posts"></div>
+      <textarea id="new-post" rows="2" placeholder="Write something for your community..."></textarea>
       <button class="btn small" onclick="addPost()">Post</button>
     </div>
-
-    <div class="price">
-      <div class="card">
-        <h3>Alag-alag tools</h3>
-        <p class="strike">₹39,000 / month (approx.)</p>
-        <p class="muted">Link-in-bio, bookings, courses, analytics, auto-DM, email, library, community — each on a separate subscription. (These figures are the reel’s claims, not verified.)</p>
-      </div>
-      <div class="card hot">
-        <h3>CreatorOne — sab kuch ek me</h3>
-        <p><b style="font-size:22px">FREE</b></p>
-        <p class="muted">All the tools above in a single plan. Free — everything included.</p>
-        <button class="btn" style="margin-top:10px" onclick="toast('Free plan — no payment needed (demo)')">Free plan (demo)</button>
-      </div>
-    </div>
   </div>
-
-  <!-- ============ DASHBOARD VIEW ============ -->
-  <div id="view-dash" class="hide">
+  <div id="view-owner-dash" class="hide">
     <div class="card">
-      <h2>Dashboard — last 7 days</h2>
+      <h2>Dashboard — real numbers</h2>
+      <p class="muted" style="margin-bottom:12px">Counts start at zero for a new page and grow only from real visits, clicks, bookings and subscribers. No demo numbers.</p>
       <div class="grid" style="grid-template-columns:repeat(4,1fr)">
         <div class="stat"><b id="st-views">0</b><span>Profile views</span></div>
         <div class="stat"><b id="st-clicks">0</b><span>Link clicks</span></div>
         <div class="stat"><b id="st-subs">0</b><span>Email subscribers</span></div>
         <div class="stat"><b id="st-book">0</b><span>Bookings</span></div>
       </div>
-      <div style="margin-top:16px" id="chart"></div>
     </div>
-
     <div class="card">
       <h2>Subscribers</h2>
       <div id="subs-list"></div>
+      <p class="muted">Subscribing stores the email here. No welcome email is sent yet.</p>
     </div>
-
     <div class="card">
       <h2>Bookings</h2>
       <div id="book-list"></div>
+      <p class="muted">Bookings are saved here. No calendar invite is sent yet — contact the visitor yourself.</p>
     </div>
-
     <div class="card">
       <h2>Auto-DM — status</h2>
-      <p class="muted">Instagram auto-DM in this demo is only a placeholder. Real auto-DMs need Meta’s official API approval — without it, automation breaks Instagram’s rules, so this feature is deliberately kept off here.</p>
+      <p class="muted">Instagram auto-DM is a placeholder. Real auto-DMs need Meta's official API approval — without it, automation breaks Instagram's rules, so this feature is deliberately kept off here.</p>
     </div>
   </div>
-
-  <footer>CreatorOne MVP demo · Idea source: startup_road’s reel (31 Oct 2026) — “Stan-style bundle for India” · Revenue/price figures are the reel’s claims, not independently verified. · <a href="privacy.html">Privacy Policy</a></footer>
+  <div id="view-public" class="hide">
+    <div class="card profile">
+      <div class="avatar" id="pub-avatar">C</div>
+      <div>
+        <h1 id="pub-handle"></h1>
+        <p id="pub-bio"></p>
+        <p class="muted" id="pub-stats"></p>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Links</h2>
+      <div id="pub-links"></div>
+    </div>
+    <div class="card">
+      <h2>Store — Digital products</h2>
+      <div id="pub-products"></div>
+    </div>
+    <div class="card">
+      <h2>Book a call</h2>
+      <p class="muted" style="margin-bottom:10px">30 min intro call — pick a slot below, then enter your name and email.</p>
+      <div id="pub-slots"></div>
+      <div class="grid">
+        <input id="book-name" placeholder="Your name">
+        <input id="book-email" type="email" placeholder="Your email">
+      </div>
+      <button class="btn small" onclick="bookSlot()">Book this slot</button>
+    </div>
+    <div class="card">
+      <h2>Courses</h2>
+      <div id="pub-courses"></div>
+    </div>
+    <div class="card">
+      <h2>Newsletter</h2>
+      <p class="muted" style="margin-bottom:10px">Subscribe to get new courses, offers and posts.</p>
+      <div class="grid">
+        <input id="sub-email" type="email" placeholder="Your email">
+        <button class="btn" onclick="subscribe()">Subscribe</button>
+      </div>
+      <p class="muted" id="sub-count"></p>
+    </div>
+    <div class="card">
+      <h2>Community</h2>
+      <div id="pub-posts"></div>
+    </div>
+    <div class="card" style="text-align:center">
+      <h2>Want a page like this?</h2>
+      <p class="muted" style="margin-bottom:12px">Create your own free CreatorOne page — no card required.</p>
+      <a class="btn" href="app.html">Create my free page</a>
+    </div>
+  </div>
+  <footer>CreatorOne · Free for everyone · <a href="index.html">Home</a> · <a href="privacy.html">Privacy Policy</a></footer>
 </div>
 <div class="toast" id="toast"></div>
 <script>
-const KEY = "creatorone-demo-v2";
-const seed = {
-  links: [
-    {title: "My YouTube channel", url: "https://youtube.com"},
-    {title: "Latest course — Creator Starter", url: "#courses"},
-    {title: "Join my community", url: "#community"}
-  ],
-  products: [
-    {name: "Preset Pack — 50 photo presets", price: "₹499"},
-    {name: "Notion Creator Template", price: "₹299"}
-  ],
-  courses: [
-    {name: "Creator Starter — 0 to 1000 followers", price: "₹999", students: 132},
-    {name: "Reels Editing Masterclass", price: "₹1,499", students: 87}
-  ],
-  bookings: [],
-  subs: ["demo@example.com"],
-  posts: [
-    {text: "Welcome! Courses, bookings and new updates will reach you here first."},
-    {text: "A new preset pack is coming this week — keep an eye on the store."}
-  ],
-  stats: {views: 1240, clicks: 386},
-  week: [42, 58, 51, 73, 66, 91, 84]
-};
-let S;
-try { S = JSON.parse(localStorage.getItem(KEY)) || seed; } catch(e) { S = seed; }
-if (!S.week) S.week = seed.week;
-function save(){ localStorage.setItem(KEY, JSON.stringify(S)); }
-function toast(msg){ const t = document.getElementById("toast"); t.textContent = msg; t.style.display = "block"; setTimeout(()=> t.style.display = "none", 2600); }
-function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
-
-function showView(v){
-  document.getElementById("view-store").classList.toggle("hide", v !== "store");
-  document.getElementById("view-dash").classList.toggle("hide", v !== "dash");
-  document.getElementById("btn-store").classList.toggle("on", v === "store");
-  document.getElementById("btn-dash").classList.toggle("on", v === "dash");
-  if (v === "dash") renderDash();
+const API = location.hostname.includes('github.io') ? 'https://creatorone-api.onrender.com' : '';
+const TOKEN_KEY = 'creatorone-token-v1';
+let TOKEN = localStorage.getItem(TOKEN_KEY) || '';
+let ME = null, DASH = null, PUB = null, PUB_HANDLE = '', SEL_SLOT = '';
+const $ = (id) => document.getElementById(id);
+function esc(s){ return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function toast(m){ const t = $('toast'); t.textContent = m; t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 3200); }
+async function api(path, opts = {}) {
+  const r = await fetch(API + path, { ...opts, headers: { 'Content-Type': 'application/json', ...(TOKEN ? { Authorization: 'Bearer ' + TOKEN } : {}), ...(opts.headers || {}) } });
+  const data = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(data.error || ('Request failed (' + r.status + ')'));
+  return data;
 }
-
-function renderStore(){
-  S.stats.views++;
-  document.getElementById("store-stats").textContent =
-    S.stats.views + " views · " + S.stats.clicks + " link clicks · " + S.subs.length + " subscribers";
-  document.getElementById("links").innerHTML = S.links.map((l,i) =>
-    `<div class="linkrow"><a href="${esc(l.url)}" target="_blank" onclick="clickLink()">${esc(l.title)}</a>
-     <button class="btn ghost small" onclick="delLink(${i})">Remove</button></div>`).join("") || `<p class="muted">No links yet — add one above.</p>`;
-  document.getElementById("products").innerHTML = S.products.map(p =>
-    `<div class="prodrow"><div><b>${esc(p.name)}</b><div class="muted">Digital download</div></div>
-     <button class="btn small" onclick="toast('Demo: payment is not connected yet')">Buy — ${esc(p.price)}</button></div>`).join("");
-  const days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-  document.getElementById("slots").innerHTML = days.map((d,i) => {
-    const taken = S.bookings.includes(d);
-    return `<span class="slot ${taken ? "booked" : ""}" ${taken ? "" : `onclick="bookSlot('${d}')"`}>${d} · 6 PM ${taken ? "✓ booked" : ""}</span>`;
-  }).join("");
-  document.getElementById("bookings-mine").innerHTML = S.bookings.length
-    ? `<p class="muted" style="margin-top:8px">Your bookings: ${S.bookings.join(", ")}</p>` : "";
-  document.getElementById("courses").innerHTML = S.courses.map(c =>
-    `<div class="courserow"><div><b>${esc(c.name)}</b><div class="muted">${c.students} students</div></div>
-     <button class="btn small" onclick="enroll('${esc(c.name)}')">Enroll — ${esc(c.price)}</button></div>`).join("");
-  document.getElementById("sub-count").textContent = S.subs.length + " people already subscribed.";
-  document.getElementById("posts").innerHTML = S.posts.map(p =>
-    `<div class="post">${esc(p.text)}</div>`).join("");
-  save();
+function hideAll(){ ['view-auth','view-owner-page','view-owner-dash','view-public'].forEach((id) => $(id).classList.add('hide')); $('btn-logout').classList.add('hide'); }
+function publicLinkFor(handle){
+  const base = location.hostname.includes('github.io') ? 'https://tabi02.github.io/creatorone/app.html' : (location.origin + location.pathname);
+  return base + '?u=' + encodeURIComponent(handle);
 }
-function clickLink(){ S.stats.clicks++; save(); renderStore(); }
-function delLink(i){ S.links.splice(i,1); save(); renderStore(); }
-function addLink(){
-  const t = document.getElementById("new-link-title").value.trim();
-  const u = document.getElementById("new-link-url").value.trim();
-  if (!t || !u) return toast("Enter both a name and a URL");
-  S.links.push({title: t, url: u}); save(); renderStore(); toast("Link added");
+function setAuthTab(tab){
+  $('tab-signup').classList.toggle('on', tab === 'signup');
+  $('tab-login').classList.toggle('on', tab === 'login');
+  $('signup-fields').classList.toggle('hide', tab !== 'signup');
+  $('auth-btn').textContent = tab === 'signup' ? 'Create my free page' : 'Log in';
+  $('auth-btn').dataset.tab = tab;
 }
-function bookSlot(d){ S.bookings.push(d); save(); renderStore(); toast(d + " · 6 PM booked! (demo)"); }
-function enroll(name){ toast(name + " — enrolled (demo)"); }
-function subscribe(){
-  const e = document.getElementById("sub-email").value.trim();
-  if (!e || !e.includes("@")) return toast("Enter a valid email");
-  if (S.subs.includes(e)) return toast("This email is already subscribed");
-  S.subs.push(e); save(); renderStore(); toast("Subscribed! Welcome email is not sent in the demo");
+async function submitAuth(){
+  const tab = $('auth-btn').dataset.tab || 'signup';
+  const email = $('auth-email').value.trim(), password = $('auth-pass').value;
+  try {
+    let data;
+    if (tab === 'signup') {
+      const handle = $('su-handle').value.trim().toLowerCase(), name = $('su-name').value.trim();
+      if (!handle) return toast('Enter a handle for your page');
+      data = await api('/api/signup', { method: 'POST', body: JSON.stringify({ email, password, handle, display_name: name }) });
+    } else {
+      data = await api('/api/login', { method: 'POST', body: JSON.stringify({ email, password }) });
+    }
+    TOKEN = data.token; localStorage.setItem(TOKEN_KEY, TOKEN); ME = data.user;
+    toast(tab === 'signup' ? 'Welcome! Your page is live.' : 'Logged in.');
+    await loadOwner();
+  } catch (e) { $('auth-msg').textContent = e.message; }
 }
-function addPost(){
-  const t = document.getElementById("new-post").value.trim();
-  if (!t) return;
-  S.posts.unshift({text: t}); document.getElementById("new-post").value = ""; save(); renderStore(); toast("Post is live (demo)");
+function logout(){
+  if (TOKEN) api('/api/logout', { method: 'POST' }).catch(() => {});
+  TOKEN = ''; localStorage.removeItem(TOKEN_KEY); ME = null;
+  hideAll(); $('view-auth').classList.remove('hide'); setAuthTab('login');
+}
+function showOwnerTab(tab){
+  hideAll(); $('btn-logout').classList.remove('hide');
+  $('btn-page').classList.toggle('on', tab === 'page');
+  $('btn-dash').classList.toggle('on', tab === 'dash');
+  $(tab === 'page' ? 'view-owner-page' : 'view-owner-dash').classList.remove('hide');
+  if (tab === 'dash') renderDash();
+}
+async function loadOwner(){
+  try { DASH = await api('/api/me/dashboard'); } catch (e) { return logout(); }
+  $('owner-note').textContent = 'Your public page is live at: ' + publicLinkFor(DASH.page.handle);
+  $('public-link').textContent = publicLinkFor(DASH.page.handle);
+  $('me-name').value = DASH.page.display_name || '';
+  $('me-handle-view').value = '@' + DASH.page.handle;
+  $('me-bio').value = DASH.page.bio || '';
+  renderOwnerLists();
+  showOwnerTab('page');
+}
+function renderOwnerLists(){
+  const p = DASH.page;
+  $('owner-links').innerHTML = p.links.map((l) => `<div class="row"><a href="${esc(l.url)}" target="_blank">${esc(l.title)}</a><span><span class="muted">${l.clicks} clicks · </span><button class="btn ghost small" onclick="delItem('links',${l.id})">Remove</button></span></div>`).join('') || '<p class="muted">No links yet.</p>';
+  $('owner-products').innerHTML = p.products.map((x) => `<div class="row"><div><b>${esc(x.name)}</b><div class="muted">${esc(x.description || '')}</div></div><span><b>${esc(x.price)}</b> <button class="btn ghost small" onclick="delItem('products',${x.id})">Remove</button></span></div>`).join('') || '<p class="muted">No products yet.</p>';
+  $('owner-courses').innerHTML = p.courses.map((x) => `<div class="row"><div><b>${esc(x.name)}</b><div class="muted">${esc(x.description || '')}</div></div><span><b>${esc(x.price)}</b> <button class="btn ghost small" onclick="delItem('courses',${x.id})">Remove</button></span></div>`).join('') || '<p class="muted">No courses yet.</p>';
+  $('owner-posts').innerHTML = p.posts.map((x) => `<div class="post">${esc(x.text)}</div>`).join('') || '<p class="muted">No posts yet.</p>';
 }
 function renderDash(){
-  document.getElementById("st-views").textContent = S.stats.views;
-  document.getElementById("st-clicks").textContent = S.stats.clicks;
-  document.getElementById("st-subs").textContent = S.subs.length;
-  document.getElementById("st-book").textContent = S.bookings.length;
-  const max = Math.max(...S.week);
-  const days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-  document.getElementById("chart").innerHTML = "<h3 style='margin-bottom:10px'>Daily profile views</h3>" +
-    S.week.map((v,i) => `<div class="bar-row"><span class="lbl">${days[i]}</span><div class="bar"><i style="width:${Math.round(v/max*100)}%"></i></div><span>${v}</span></div>`).join("");
-  document.getElementById("subs-list").innerHTML = S.subs.map(s => `<div class="linkrow"><span>${esc(s)}</span><span class="muted">subscribed</span></div>`).join("");
-  document.getElementById("book-list").innerHTML = S.bookings.length
-    ? S.bookings.map(b => `<div class="linkrow"><span>${b} · 6 PM</span><span class="muted">intro call</span></div>`).join("")
-    : `<p class="muted">No bookings yet.</p>`;
+  const s = DASH.page.stats;
+  $('st-views').textContent = s.views; $('st-clicks').textContent = s.clicks;
+  $('st-subs').textContent = s.subscribers; $('st-book').textContent = s.bookings;
+  $('subs-list').innerHTML = DASH.subscribers.map((x) => `<div class="row"><span>${esc(x.email)}</span><span class="muted">subscribed</span></div>`).join('') || '<p class="muted">No subscribers yet.</p>';
+  $('book-list').innerHTML = DASH.bookings.map((x) => `<div class="row"><span><b>${esc(x.name)}</b> — ${esc(x.slot)}</span><span class="muted">${esc(x.email)}</span></div>`).join('') || '<p class="muted">No bookings yet.</p>';
 }
-renderStore();
+async function saveProfile(){
+  try { const d = await api('/api/me', { method: 'PATCH', body: JSON.stringify({ display_name: $('me-name').value.trim(), bio: $('me-bio').value.trim() }) }); DASH.page.display_name = d.user.display_name; DASH.page.bio = d.user.bio; toast('Profile saved.'); } catch (e) { toast(e.message); }
+}
+async function copyPublicLink(){
+  const link = publicLinkFor(DASH.page.handle);
+  try { await navigator.clipboard.writeText(link); toast('Public link copied.'); } catch { prompt('Copy your public link:', link); }
+}
+async function addLink(){
+  const title = $('new-link-title').value.trim(), url = $('new-link-url').value.trim();
+  if (!title || !url) return toast('Enter both a name and a URL');
+  try { await api('/api/me/links', { method: 'POST', body: JSON.stringify({ title, url }) }); $('new-link-title').value = ''; $('new-link-url').value = ''; await loadOwner(); toast('Link added.'); } catch (e) { toast(e.message); }
+}
+async function addProduct(){
+  const name = $('new-prod-name').value.trim(); if (!name) return toast('Enter a product name');
+  try { await api('/api/me/products', { method: 'POST', body: JSON.stringify({ name, price: $('new-prod-price').value.trim(), description: $('new-prod-desc').value.trim() }) }); $('new-prod-name').value = ''; $('new-prod-price').value = ''; $('new-prod-desc').value = ''; await loadOwner(); toast('Product added.'); } catch (e) { toast(e.message); }
+}
+async function addCourse(){
+  const name = $('new-course-name').value.trim(); if (!name) return toast('Enter a course name');
+  try { await api('/api/me/courses', { method: 'POST', body: JSON.stringify({ name, price: $('new-course-price').value.trim(), description: $('new-course-desc').value.trim() }) }); $('new-course-name').value = ''; $('new-course-price').value = ''; $('new-course-desc').value = ''; await loadOwner(); toast('Course added.'); } catch (e) { toast(e.message); }
+}
+async function addPost(){
+  const text = $('new-post').value.trim(); if (!text) return;
+  try { await api('/api/me/posts', { method: 'POST', body: JSON.stringify({ text }) }); $('new-post').value = ''; await loadOwner(); toast('Post is live.'); } catch (e) { toast(e.message); }
+}
+async function delItem(table, id){
+  try { await api('/api/me/' + table + '/' + id, { method: 'DELETE' }); await loadOwner(); } catch (e) { toast(e.message); }
+}
+async function loadPublic(handle){
+  PUB_HANDLE = handle;
+  try { const d = await api('/api/pages/' + encodeURIComponent(handle)); PUB = d.page; } catch (e) { hideAll(); $('view-auth').classList.remove('hide'); toast('No page found for @' + handle); return; }
+  api('/api/pages/' + encodeURIComponent(handle) + '/view', { method: 'POST' }).catch(() => {});
+  hideAll();
+  $('pub-avatar').textContent = (PUB.display_name || PUB.handle || 'C').trim().charAt(0).toUpperCase();
+  $('pub-handle').textContent = '@' + PUB.handle;
+  $('pub-bio').textContent = PUB.bio || '';
+  $('pub-stats').textContent = PUB.stats.views + ' views · ' + PUB.stats.clicks + ' link clicks · ' + PUB.stats.subscribers + ' subscribers';
+  $('pub-links').innerHTML = PUB.links.map((l) => `<div class="row"><a href="#" data-url="${esc(l.url)}" onclick="clickPubLink(event,${l.id},this.dataset.url)">${esc(l.title)}</a><span class="muted">${l.clicks} clicks</span></div>`).join('') || '<p class="muted">No links yet.</p>';
+  $('pub-products').innerHTML = PUB.products.map((x) => `<div class="row"><div><b>${esc(x.name)}</b><div class="muted">${esc(x.description || 'Digital download')}</div></div><button class="btn small" onclick="toast('Payment is not connected yet — this is a listing only')">Buy — ${esc(x.price)}</button></div>`).join('') || '<p class="muted">No products yet.</p>';
+  $('pub-courses').innerHTML = PUB.courses.map((x) => `<div class="row"><div><b>${esc(x.name)}</b><div class="muted">${esc(x.description || '')}</div></div><button class="btn small" onclick="toast('Payment is not connected yet — this is a listing only')">Enroll — ${esc(x.price)}</button></div>`).join('') || '<p class="muted">No courses yet.</p>';
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  $('pub-slots').innerHTML = days.map((d) => `<span class="slot" id="slot-${d}" onclick="pickSlot('${d}')">${d} · 6 PM</span>`).join('');
+  $('sub-count').textContent = PUB.stats.subscribers + ' people already subscribed.';
+  $('pub-posts').innerHTML = PUB.posts.map((x) => `<div class="post">${esc(x.text)}</div>`).join('') || '<p class="muted">No posts yet.</p>';
+  $('view-public').classList.remove('hide');
+}
+function pickSlot(d){ SEL_SLOT = d + ' · 6 PM'; document.querySelectorAll('#pub-slots .slot').forEach((el) => el.classList.toggle('sel', el.id === 'slot-' + d)); }
+function clickPubLink(ev, id, url){
+  ev.preventDefault();
+  fetch(API + '/api/pages/' + encodeURIComponent(PUB_HANDLE) + '/links/' + id + '/click', { method: 'POST', keepalive: true }).catch(() => {});
+  window.open(url, '_blank');
+}
+async function bookSlot(){
+  if (!SEL_SLOT) return toast('Pick a day slot first');
+  const name = $('book-name').value.trim(), email = $('book-email').value.trim();
+  if (!name || !email) return toast('Enter your name and email');
+  try { const d = await api('/api/pages/' + encodeURIComponent(PUB_HANDLE) + '/book', { method: 'POST', body: JSON.stringify({ name, email, slot: SEL_SLOT }) }); toast(SEL_SLOT + ' booked! ' + (d.note || '')); } catch (e) { toast(e.message); }
+}
+async function subscribe(){
+  const email = $('sub-email').value.trim();
+  try { const d = await api('/api/pages/' + encodeURIComponent(PUB_HANDLE) + '/subscribe', { method: 'POST', body: JSON.stringify({ email }) }); toast(d.note || 'Subscribed!'); await loadPublic(PUB_HANDLE); } catch (e) { toast(e.message); }
+}
+(async function init(){
+  setAuthTab('signup');
+  const params = new URLSearchParams(location.search);
+  const handle = params.get('u') || params.get('page') || params.get('handle');
+  if (handle) return loadPublic(handle.toLowerCase());
+  if (TOKEN) { try { await api('/api/me'); return loadOwner(); } catch { TOKEN = ''; localStorage.removeItem(TOKEN_KEY); } }
+  hideAll(); $('view-auth').classList.remove('hide');
+})();
 </script>
 </body>
 </html>
