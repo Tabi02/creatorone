@@ -11,8 +11,18 @@ https://tabi02.github.io/creatorone/app.html?u=YOURHANDLE
 - Visitor bookings and newsletter subscriptions, stored in the database
 - Real analytics: page views, link clicks, subscribers, bookings (start at 0, no demo numbers)
 
+## Creator dashboard for selling to followers
+Every creator gets their own dashboard: add products/courses, share their public
+page link (`app.html?u=handle`) with followers, and followers can place test
+orders from that page. The creator sees orders, subscribers, bookings and real
+analytics in their dashboard, and marks test orders verified/rejected only
+after checking their own bank records. Creating a page is always free.
+
 ## What is NOT live yet (labelled honestly on the site)
-- Payments: Buy / Enroll are listings only, no money moves (payment provider activation pending)
+- Real payments: Buy / Enroll create TEST orders only, no money moves.
+  YouPI-PG is under test review only — it is an experimental, non-certified
+  gateway, so no real UPI, bank SMS observer, Gmail observer, or Android
+  observer is connected, and no merchant VPA is configured yet.
 - Instagram auto-DMs: placeholder only (needs Meta official API approval)
 - Email sending: subscribing stores the email; no welcome email is sent yet
 

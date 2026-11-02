@@ -3,7 +3,10 @@
 // same folder and provides /api/* for accounts, pages, links, products, courses,
 // bookings, subscribers, posts and real analytics.
 // Honest limits in v1 (see README note in index FAQ + privacy):
-//  - Payments are NOT connected: Buy/Enroll are listings only, no money moves.
+//  - Payments are TEST ONLY (YouPI pattern, no gateway call): Buy/Enroll create
+//    a pending_verification test order only. No real money moves, no real UPI
+//    QR is shown, and a test order is never a confirmed payment. Real YouPI
+//    needs a separate gateway deployment + merchant VPA + observer setup.
 //  - Instagram auto-DMs are a placeholder: real auto-DMs need Meta API approval.
 //  - Newsletter subscribe STORES the email; no welcome email is sent yet
 //    (email provider onboarding is still pending).
@@ -78,6 +81,24 @@ CREATE TABLE IF NOT EXISTS page_stats (
   user_id INTEGER PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
   views INTEGER NOT NULL DEFAULT 0,
   clicks INTEGER NOT NULL DEFAULT 0
+);
+-- YouPI-style TEST orders only. No real money, no real UPI, no gateway call yet.
+-- Status flow follows the YouPI manual-UPI guide: an order stays
+-- pending_verification until the page owner (admin) marks it verified/rejected
+-- after checking their own bank records. In TEST mode that bank check is
+-- simulated — never treat a test order as a real payment.
+CREATE TABLE IF NOT EXISTS orders (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  kind TEXT NOT NULL,
+  item_id INTEGER NOT NULL,
+  item_name TEXT NOT NULL,
+  price_text TEXT NOT NULL DEFAULT '',
+  buyer_name TEXT NOT NULL,
+  buyer_email TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'pending_verification',
+  gateway TEXT NOT NULL DEFAULT 'youpi_test',
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 `);
 
@@ -202,7 +223,40 @@ app.patch('/api/me', auth, (req, res) => {
 app.get('/api/me/dashboard', auth, (req, res) => {
   const bookings = db.prepare('SELECT id, name, email, slot, created_at FROM bookings WHERE user_id = ? ORDER BY id DESC LIMIT 100').all(req.user.id);
   const subscribers = db.prepare('SELECT id, email, created_at FROM subscribers WHERE user_id = ? ORDER BY id DESC LIMIT 200').all(req.user.id);
-  res.json({ page: pagePayload(req.user), bookings, subscribers });
+  const orders = db.prepare('SELECT id, kind, item_name, price_text, buyer_name, buyer_email, status, gateway, created_at FROM orders WHERE user_id = ? ORDER BY id DESC LIMIT 200').all(req.user.id);
+  res.json({ page: pagePayload(req.user), bookings, subscribers, orders });
+});
+
+// TEST checkout: create a pending_verification order. Price is always read
+// from the creator's own product/course row — never trusted from the client.
+app.post('/api/pages/:handle/orders', (req, res) => {
+  const user = ownerPage(req.params.handle.toLowerCase());
+  if (!user) return res.status(404).json({ error: 'No page with that handle.' });
+  const kind = req.body?.kind === 'course' ? 'course' : 'product';
+  const table = kind === 'course' ? 'courses' : 'products';
+  const item = db.prepare(`SELECT * FROM ${table} WHERE id = ? AND user_id = ?`).get(req.body?.item_id, user.id);
+  if (!item) return res.status(404).json({ error: 'Item not found on this page.' });
+  const buyerName = String(req.body?.buyer_name || '').trim().slice(0, 100);
+  const buyerEmail = String(req.body?.buyer_email || '').trim().toLowerCase();
+  if (!buyerName || !validEmail(buyerEmail)) return res.status(400).json({ error: 'Name and a valid email are required for a test order.' });
+  const info = db.prepare('INSERT INTO orders (user_id, kind, item_id, item_name, price_text, buyer_name, buyer_email) VALUES (?, ?, ?, ?, ?, ?, ?)')
+    .run(user.id, kind, item.id, item.name, item.price || '', buyerName, buyerEmail);
+  res.status(201).json({
+    ok: true,
+    order: { id: info.lastInsertRowid, kind, item_name: item.name, price_text: item.price || '', status: 'pending_verification' },
+    note: 'TEST ORDER ONLY — no real money was taken, no real UPI payment was made, and this order is NOT a confirmed payment. The page owner must verify it separately.',
+  });
+});
+
+// Owner marks a test order verified/rejected (manual-review pattern).
+app.post('/api/me/orders/:id/decision', auth, (req, res) => {
+  const decision = req.body?.decision === 'verified' ? 'verified' : req.body?.decision === 'rejected' ? 'rejected' : null;
+  if (!decision) return res.status(400).json({ error: 'Decision must be verified or rejected.' });
+  const order = db.prepare('SELECT * FROM orders WHERE id = ? AND user_id = ?').get(req.params.id, req.user.id);
+  if (!order) return res.status(404).json({ error: 'Order not found.' });
+  if (order.status !== 'pending_verification') return res.status(409).json({ error: 'This order already has a final decision.' });
+  db.prepare('UPDATE orders SET status = ? WHERE id = ?').run(decision, order.id);
+  res.json({ ok: true, status: decision });
 });
 
 // Owner CRUD — one generic helper keeps the four lists identical in behaviour.

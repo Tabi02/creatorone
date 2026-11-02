@@ -148,6 +148,11 @@
       <p class="muted">Bookings are saved here. No calendar invite is sent yet — contact the visitor yourself.</p>
     </div>
     <div class="card">
+      <h2>Orders — TEST only</h2>
+      <div id="order-list"></div>
+      <p class="muted">Test orders only: no real money was taken. Mark verified only after you have checked your own bank records yourself — a test order alone is never proof of payment.</p>
+    </div>
+    <div class="card">
       <h2>Auto-DM — status</h2>
       <p class="muted">Instagram auto-DM is a placeholder. Real auto-DMs need Meta's official API approval — without it, automation breaks Instagram's rules, so this feature is deliberately kept off here.</p>
     </div>
@@ -183,6 +188,17 @@
       <h2>Courses</h2>
       <div id="pub-courses"></div>
     </div>
+    <div class="card" id="checkout-card">
+      <h2>Test checkout</h2>
+      <p class="muted" style="margin-bottom:10px">TEST ONLY — no real money, no real UPI payment. Creating a page on CreatorOne is free; this checkout is only a test order for a product or course, and it stays pending until the page owner verifies it separately.</p>
+      <p id="checkout-item" class="muted" style="margin-bottom:10px">Pick a product or course above to start a test order.</p>
+      <div class="grid">
+        <input id="order-name" placeholder="Your name">
+        <input id="order-email" type="email" placeholder="Your email">
+      </div>
+      <button class="btn small" onclick="submitTestOrder()">Place test order</button>
+      <p class="muted" id="checkout-result" style="margin-top:10px"></p>
+    </div>
     <div class="card">
       <h2>Newsletter</h2>
       <p class="muted" style="margin-bottom:10px">Subscribe to get new courses, offers and posts.</p>
@@ -209,7 +225,7 @@
 const API = location.hostname.includes('github.io') ? 'https://creatorone-api.onrender.com' : '';
 const TOKEN_KEY = 'creatorone-token-v1';
 let TOKEN = localStorage.getItem(TOKEN_KEY) || '';
-let ME = null, DASH = null, PUB = null, PUB_HANDLE = '', SEL_SLOT = '';
+let ME = null, DASH = null, PUB = null, PUB_HANDLE = '', SEL_SLOT = '', SEL_ORDER = null;
 const $ = (id) => document.getElementById(id);
 function esc(s){ return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function toast(m){ const t = $('toast'); t.textContent = m; t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 3200); }
@@ -283,6 +299,10 @@ function renderDash(){
   $('st-subs').textContent = s.subscribers; $('st-book').textContent = s.bookings;
   $('subs-list').innerHTML = DASH.subscribers.map((x) => `<div class="row"><span>${esc(x.email)}</span><span class="muted">subscribed</span></div>`).join('') || '<p class="muted">No subscribers yet.</p>';
   $('book-list').innerHTML = DASH.bookings.map((x) => `<div class="row"><span><b>${esc(x.name)}</b> — ${esc(x.slot)}</span><span class="muted">${esc(x.email)}</span></div>`).join('') || '<p class="muted">No bookings yet.</p>';
+  $('order-list').innerHTML = (DASH.orders || []).map((x) => `<div class="row"><span><b>${esc(x.item_name)}</b> (${esc(x.kind)}) — ${esc(x.price_text)}<br><span class="muted">${esc(x.buyer_name)} · ${esc(x.buyer_email)} · ${esc(x.status)}</span></span><span>${x.status === 'pending_verification' ? `<button class="btn ghost small" onclick="orderDecision(${x.id},'verified')">Mark verified</button> <button class="btn ghost small" onclick="orderDecision(${x.id},'rejected')">Reject</button>` : ''}</span></div>`).join('') || '<p class="muted">No test orders yet.</p>';
+}
+async function orderDecision(id, decision){
+  try { await api('/api/me/orders/' + id + '/decision', { method: 'POST', body: JSON.stringify({ decision }) }); await loadOwner(); showOwnerTab('dash'); toast('Order marked ' + decision + ' (test only).'); } catch (e) { toast(e.message); }
 }
 async function saveProfile(){
   try { const d = await api('/api/me', { method: 'PATCH', body: JSON.stringify({ display_name: $('me-name').value.trim(), bio: $('me-bio').value.trim() }) }); DASH.page.display_name = d.user.display_name; DASH.page.bio = d.user.bio; toast('Profile saved.'); } catch (e) { toast(e.message); }
@@ -321,8 +341,8 @@ async function loadPublic(handle){
   $('pub-bio').textContent = PUB.bio || '';
   $('pub-stats').textContent = PUB.stats.views + ' views · ' + PUB.stats.clicks + ' link clicks · ' + PUB.stats.subscribers + ' subscribers';
   $('pub-links').innerHTML = PUB.links.map((l) => `<div class="row"><a href="#" data-url="${esc(l.url)}" onclick="clickPubLink(event,${l.id},this.dataset.url)">${esc(l.title)}</a><span class="muted">${l.clicks} clicks</span></div>`).join('') || '<p class="muted">No links yet.</p>';
-  $('pub-products').innerHTML = PUB.products.map((x) => `<div class="row"><div><b>${esc(x.name)}</b><div class="muted">${esc(x.description || 'Digital download')}</div></div><button class="btn small" onclick="toast('Payment is not connected yet — this is a listing only')">Buy — ${esc(x.price)}</button></div>`).join('') || '<p class="muted">No products yet.</p>';
-  $('pub-courses').innerHTML = PUB.courses.map((x) => `<div class="row"><div><b>${esc(x.name)}</b><div class="muted">${esc(x.description || '')}</div></div><button class="btn small" onclick="toast('Payment is not connected yet — this is a listing only')">Enroll — ${esc(x.price)}</button></div>`).join('') || '<p class="muted">No courses yet.</p>';
+  $('pub-products').innerHTML = PUB.products.map((x) => `<div class="row"><div><b>${esc(x.name)}</b><div class="muted">${esc(x.description || 'Digital download')}</div></div><button class="btn small" onclick="startCheckout('product',${x.id},'${esc(x.name).replace(/'/g, "\\'")}','${esc(x.price).replace(/'/g, "\\'")}')">Buy (test) — ${esc(x.price)}</button></div>`).join('') || '<p class="muted">No products yet.</p>';
+  $('pub-courses').innerHTML = PUB.courses.map((x) => `<div class="row"><div><b>${esc(x.name)}</b><div class="muted">${esc(x.description || '')}</div></div><button class="btn small" onclick="startCheckout('course',${x.id},'${esc(x.name).replace(/'/g, "\\'")}','${esc(x.price).replace(/'/g, "\\'")}')">Enroll (test) — ${esc(x.price)}</button></div>`).join('') || '<p class="muted">No courses yet.</p>';
   const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
   $('pub-slots').innerHTML = days.map((d) => `<span class="slot" id="slot-${d}" onclick="pickSlot('${d}')">${d} · 6 PM</span>`).join('');
   $('sub-count').textContent = PUB.stats.subscribers + ' people already subscribed.';
@@ -344,6 +364,22 @@ async function bookSlot(){
 async function subscribe(){
   const email = $('sub-email').value.trim();
   try { const d = await api('/api/pages/' + encodeURIComponent(PUB_HANDLE) + '/subscribe', { method: 'POST', body: JSON.stringify({ email }) }); toast(d.note || 'Subscribed!'); await loadPublic(PUB_HANDLE); } catch (e) { toast(e.message); }
+}
+function startCheckout(kind, id, name, price){
+  SEL_ORDER = { kind, item_id: id, name, price };
+  $('checkout-item').textContent = 'Test order: ' + name + ' (' + kind + ') — ' + price + '. TEST ONLY, no real money will be taken.';
+  document.getElementById('checkout-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  toast('Test checkout selected: ' + name);
+}
+async function submitTestOrder(){
+  if (!SEL_ORDER) return toast('Pick a product or course above first');
+  const buyerName = $('order-name').value.trim(), buyerEmail = $('order-email').value.trim();
+  if (!buyerName || !buyerEmail) return toast('Enter your name and email for the test order');
+  try {
+    const d = await api('/api/pages/' + encodeURIComponent(PUB_HANDLE) + '/orders', { method: 'POST', body: JSON.stringify({ kind: SEL_ORDER.kind, item_id: SEL_ORDER.item_id, buyer_name: buyerName, buyer_email: buyerEmail }) });
+    $('checkout-result').textContent = 'Test order #' + d.order.id + ' created — status: ' + d.order.status + '. ' + (d.note || '');
+    toast('Test order created. This is NOT a real payment.');
+  } catch (e) { toast(e.message); }
 }
 (async function init(){
   setAuthTab('signup');
